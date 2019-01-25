@@ -5,7 +5,7 @@ using XInputDotNetPure;
 
 public class CrabMove : MonoBehaviour
 {
-	public int playerIndex = 0;
+	public PlayerIndex playerIndex = 0;
 	GamePadState gamePadState;
 
 	Vector2 leftStickInput;
@@ -22,10 +22,9 @@ public class CrabMove : MonoBehaviour
 
 	private void Update ()
 	{
-		gamePadState = GamePad.GetState((PlayerIndex) playerIndex);
+		gamePadState = GamePad.GetState(playerIndex);
 		if (gamePadState.IsConnected) {
 			GetInputs();
-			Debug.Log(leftStickInput + " " + playerIndex);
 			
 			Move(leftStickInput);
 		}
