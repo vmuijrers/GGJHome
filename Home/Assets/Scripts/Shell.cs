@@ -1,18 +1,16 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using XInputDotNetPure;
 
 public class Shell : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+	int inhabitants = 0;
+	List<PlayerIndex> playerIndeces = new List<PlayerIndex>();
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+	public void CrabEnters (PlayerIndex playerIndex)
+	{
+		inhabitants++;
+		playerIndeces.Add(playerIndex);
+	}
 }
