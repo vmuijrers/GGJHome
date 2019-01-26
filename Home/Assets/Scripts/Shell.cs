@@ -12,7 +12,7 @@ public class Shell : MonoBehaviour {
     public float speedModifier = 10;
     public float strength = 0.5f;
     public GameObject visualBottom, visualTop;
-    public Pickup uglyArmorDecoration;
+    public Pickup pickupPrefab;
 
     [HideInInspector] public MeshRenderer renderer;
 
@@ -34,9 +34,11 @@ public class Shell : MonoBehaviour {
         transform.localScale = new Vector3(size, size, size);
         StartCoroutine(PulseLight());
 
-        //foreach(PickupSlot slot in decorations) {
-        //    AttachPickup(Instantiate(uglyArmorDecoration, slot.transform.position, slot.transform.rotation));
-        //}
+        foreach (PickupSlot slot in decorations) {
+            Pickup pickup = Instantiate(pickupPrefab, slot.transform.position, slot.transform.rotation);
+            pickup.Init(DecorationType.Basic);
+            AttachPickup(pickup);
+        }
 
     }
     public int GetMaxHP() {
@@ -73,8 +75,16 @@ public class Shell : MonoBehaviour {
 
 	public void GetAttacked (int damage)
 	{
-
+        if(GetHPLeft() > 0) {
+            DetachRandomPickup();
+        } else {
+            BreakShell();
+        }
 	}
+
+    void BreakShell() {
+        Debug.Log("Shell Broken");
+    }
 
     public void AttachPickup(Pickup pickup) {
         foreach(PickupSlot obj in decorations) {
@@ -87,6 +97,16 @@ public class Shell : MonoBehaviour {
             }
         }
         
+    }
+    public void DetachRandomPickup() {
+        foreach(PickupSlot obj in decorations) {
+            if(obj.reference != null) {
+                Pickup pickup = obj.reference.GetComponent<Pickup>();
+                pickup.OnDetachFromShell();
+                obj.reference = null;
+                break;
+            }
+        }
     }
 
     public IEnumerator PulseLight() {
