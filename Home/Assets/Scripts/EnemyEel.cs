@@ -2,12 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyEel : MonoBehaviour
+public class EnemyEel : MonoBehaviour, IEnemy
 {
 	Transform targetCrabTrans;
 	Crab targetCrabScript;
 
-	const float farSpeed = 6, closeSpeed = 10, exitSpeed = 7, closeDistance = 7, contactDistance = 1;
+	public const float farSpeed = 6, closeSpeed = 10, exitSpeed = 7, closeDistance = 7, contactDistance = 1;
+	public int damage = 1;
 	float speed = farSpeed;
 	Vector3 exitPosition = new Vector3(-15, 0, -15);
 
@@ -30,7 +31,7 @@ public class EnemyEel : MonoBehaviour
 			if (distanceToCrab < closeDistance * closeDistance)
 				speed = closeSpeed;
 			if (distanceToCrab < contactDistance * contactDistance) {
-				targetCrabScript.GetAttacked(1);
+				targetCrabScript.GetAttacked(damage);
 				targetHit = true;
 			} else {
 				speed = farSpeed;
