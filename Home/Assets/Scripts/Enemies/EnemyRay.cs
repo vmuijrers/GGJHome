@@ -14,7 +14,7 @@ public class EnemyRay : MonoBehaviour, IEnemy
 
 	public void Init (Crab targetCrab)
 	{
-		renderer = GetComponent<Renderer>();
+		renderer = transform.GetComponentInChildren<Renderer>();
 		targetCrabScript = targetCrab;
 		targetCrabTrans = targetCrab.transform;
 		StartCoroutine(Move());
