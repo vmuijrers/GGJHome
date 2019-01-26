@@ -73,7 +73,7 @@ public class EnemyShrimp : MonoBehaviour, IEnemy
 	{
 		while (true) {
 			foreach (Transform t in shrimpTransforms) {
-				t.Rotate(shrimpSpinRate * Time.deltaTime, 0, 0);
+				t.Rotate(0, 0, -shrimpSpinRate * Time.deltaTime);
 			}
 			yield return null;
 		}
