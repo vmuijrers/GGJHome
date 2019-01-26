@@ -7,10 +7,10 @@ using DG.Tweening;
 
 public class Shell : MonoBehaviour {
 
-    public int size = 1;
-    public ShellEntrance entrance;
+    private int size = 1;
+    private ShellEntrance entrance;
     public float speedModifier = 10;
-    public float strength = 0.5f;
+    public float lightStrength = 0.5f;
     public GameObject visualBottom, visualTop;
     public Pickup pickupPrefab;
 
@@ -113,7 +113,7 @@ public class Shell : MonoBehaviour {
     public IEnumerator PulseLight() {
         float baseIntensity = light.intensity;
         while(true) {
-            float value = Mathf.PingPong(Time.time, strength);
+            float value = Mathf.PingPong(Time.time, lightStrength);
             light.intensity = baseIntensity + value;
             yield return null;
         }

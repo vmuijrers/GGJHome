@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   farSpeed: 2.5
-  closeSpeed: 9
+  closeSpeed: 6
   closeDistance: 4
   contactDistance: 1
   damage: 1

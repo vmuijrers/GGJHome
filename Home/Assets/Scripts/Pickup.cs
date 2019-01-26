@@ -20,6 +20,9 @@ public class Pickup : MonoBehaviour
             case DecorationType.Basic: artRef = (GameObject)Instantiate(Resources.Load("Pickups/Basic"), transform.position, transform.rotation); break;
             case DecorationType.Star: artRef = (GameObject)Instantiate(Resources.Load("Pickups/Star"), transform.position, transform.rotation); break;
         }
+        artRef.transform.SetParent(transform);
+        artRef.transform.localPosition = Vector3.zero;
+        artRef.transform.localRotation = Quaternion.identity;
     }
 
     // Update is called once per frame
