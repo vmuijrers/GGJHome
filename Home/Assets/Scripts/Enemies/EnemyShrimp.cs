@@ -5,14 +5,14 @@ using UnityEngine;
 public class EnemyShrimp : MonoBehaviour, IEnemy
 {
 	Renderer renderer;
-	
+
 	Crab[] targetCrabScripts;
 
 	public float speed = 7, secondsPerMovementUpdate = .5f, contactDistance = 1.25f;
 	public int damage = 1;
 
 	public float maxTurnRate = 360;
-	float turnRate = 0; 
+	float turnRate = 0;
 
 	public void Init (Crab targetCrab)
 	{
@@ -44,17 +44,16 @@ public class EnemyShrimp : MonoBehaviour, IEnemy
 			}
 			yield return null;
 		}
-		
+
 		Destroy(gameObject);
 	}
 
 	IEnumerator CheckForCrab ()
 	{
 		while (true) {
-			for (int i=0; i< targetCrabScripts.Length; i++) {
+			for (int i = 0; i < targetCrabScripts.Length; i++) {
 				if (Util.SquareDistance(transform.position, targetCrabScripts[i].transform.position) < contactDistance * contactDistance) {
 					targetCrabScripts[i].GetAttacked(damage);
-					Debug.Break();
 				}
 			}
 			yield return null;
