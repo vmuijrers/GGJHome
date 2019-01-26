@@ -4,20 +4,17 @@ using UnityEngine;
 
 public class EnemyTentacle : MonoBehaviour
 {
-	Transform[] targetCrabTransforms;
 	Crab[] targetCrabScripts;
 
-	public float attackTime = .7f;
+	public float attackTime = .4f, attackHitRadius = 1.5f, secondsBeforeReset = .7f, resetTime = 1;
 	public int damage = 1;
 
 	void Start ()
 	{
 		targetCrabScripts = FindObjectsOfType<Crab>();
-		targetCrabTransforms = new Transform[targetCrabScripts.Length];
-		for (int i = 0; i < targetCrabScripts.Length; i++) {
-			targetCrabTransforms[i] = targetCrabScripts[i].transform;
-		}
+
 		transform.forward = Vector3.up;
+		StartCoroutine(TentacleThings());
 	}
 
 	IEnumerator TentacleThings ()
@@ -25,8 +22,8 @@ public class EnemyTentacle : MonoBehaviour
 		bool attacking = false;
 		while (!attacking) {
 			for (int i = 0; i < targetCrabScripts.Length; i++) {
-				if (Util.SquareDistance(transform.position, targetCrabTransforms[i].position) < 3.6f) {
-					StartCoroutine(Attack(()=> { attacking = false; }, targetCrabTransforms[i].position));
+				if (Util.SquareDistance(transform.position, targetCrabScripts[i].transform.position) < 9f) {
+					StartCoroutine(Attack(() => { attacking = false; }, targetCrabScripts[i].transform.position));
 					attacking = true;
 				}
 			}
@@ -46,18 +43,20 @@ public class EnemyTentacle : MonoBehaviour
 			transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(target - transform.position, Vector3.up), 90 / attackTime * Time.deltaTime);
 			yield return null;
 		}
-		for (int i = 0; i < targetCrabTransforms.Length; i++) {
-			if (Util.SquareDistance(target, targetCrabTransforms[i].position) < .5f) {
+		for (int i = 0; i < targetCrabScripts.Length; i++) {
+			if (Util.SquareDistance(target, targetCrabScripts[i].transform.position) < attackHitRadius * attackHitRadius) {
 				targetCrabScripts[i].GetAttacked(damage);
 			}
 		}
-		yield return new WaitForSeconds(.7f);
+		yield return new WaitForSeconds(secondsBeforeReset);
 
-		for (float t = 0; t < 1.4f; t += Time.deltaTime) {
-			transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(Vector3.up, Vector3.back), 90 / 1.4f * Time.deltaTime);
+		float angleToReset = Vector3.Angle(Vector3.up, transform.forward);
+		for (float t = 0; t < resetTime; t += Time.deltaTime) {
+			transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(Vector3.up, Vector3.back), angleToReset / resetTime * Time.deltaTime);
 			yield return null;
 		}
 
+		transform.forward = Vector3.up;
 		Callback();
 	}
 }
