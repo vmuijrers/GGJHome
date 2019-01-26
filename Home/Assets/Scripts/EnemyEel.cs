@@ -2,11 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IAttackable
-{
-	void GetAttacked (int damage);
-}
-
 public class EnemyEel : MonoBehaviour
 {
 	Transform targetCrabTrans;
@@ -46,8 +41,12 @@ public class EnemyEel : MonoBehaviour
 		//TARGET HIT, RETREAT
 		while (true) {
 			transform.position = Vector3.MoveTowards(transform.position, exitPosition, exitSpeed * Time.deltaTime);
-
+			if (Util.SquareDistance(transform.position, exitPosition) < .5f) {
+				break;
+			}
 			yield return null;
 		}
+
+		Destroy(gameObject);
 	}
 }
