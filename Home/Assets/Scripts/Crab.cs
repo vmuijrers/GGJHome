@@ -62,6 +62,9 @@ public class Crab : MonoBehaviour
 
 	private void Update ()
 	{
+		if (dood)
+			return;
+
 		gamePadState = GamePad.GetState(playerIndex);
 		if (gamePadState.IsConnected) {
 			GetInputs();
@@ -143,8 +146,10 @@ public class Crab : MonoBehaviour
 
 	public void GetAttacked (int damage)
 	{
-		if (!IsInShell) {
+		if (!IsInShell && !dood) {
 			dood = true;
+			renderer.material = deathMat;
+			CameraShake.OnShake(.2f, .4f, .05f);
 		} else {
 			nearestShell.shell.GetAttacked(damage);
 		}
