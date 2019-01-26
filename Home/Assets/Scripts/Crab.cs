@@ -11,13 +11,19 @@ public class Crab : MonoBehaviour
 
 	private Vector2 leftStickInput;
 	private float leftTrigger;
-	private Rigidbody rig;
+	private Rigidbody rigidbody;
 	private bool isNearShell;
 	private ShellEntrance nearestShell;
 
 	[Header("Settings")]
 	public float speed = 5;
 	[SerializeField] private float triggerTreshold = 0.5f;
+
+	Renderer renderer;
+	Material baseMat;
+	public Material deathMat;
+	[HideInInspector]
+	public bool dood = false;
 
 	private bool isInShell = false;
 	public bool IsInShell
@@ -47,7 +53,9 @@ public class Crab : MonoBehaviour
 	}
 	private void Awake ()
 	{
-		rig = GetComponent<Rigidbody>();
+		rigidbody = GetComponent<Rigidbody>();
+		renderer = GetComponent<Renderer>();
+		baseMat = renderer.material;
 	}
 
 	private void Update ()
@@ -73,7 +81,7 @@ public class Crab : MonoBehaviour
 		}
 
 		if (IsInShell) {
-			rig.position = Vector3.Scale(nearestShell.transform.position, new Vector3(1, 0, 1));
+			rigidbody.position = Vector3.Scale(nearestShell.transform.position, new Vector3(1, 0, 1));
 			//rig.velocity = (targetPosShell.transform.position - transform.position).normalized * 3f;
 		}
 	}
@@ -82,14 +90,13 @@ public class Crab : MonoBehaviour
 	{
 		leftStickInput = new Vector2(gamePadState.ThumbSticks.Left.X, gamePadState.ThumbSticks.Left.Y);
 		leftTrigger = gamePadState.Triggers.Left;
-
 	}
 
 	private void Move (Vector2 direction)
 	{
 		direction = direction.normalized;
 		if (!IsInShell)
-			rig.velocity = new Vector3(direction.x * speed, 0, direction.y * speed);
+			rigidbody.velocity = new Vector3(direction.x * speed, 0, direction.y * speed);
 
 	}
 
@@ -113,6 +120,10 @@ public class Crab : MonoBehaviour
 
 	public void GetAttacked (int damage)
 	{
-
+		if (!IsInShell) {
+			dood = true;
+		} else {
+			nearestShell.shell.GetAttacked(damage);
+		}
 	}
 }

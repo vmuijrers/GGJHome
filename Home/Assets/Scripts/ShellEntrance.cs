@@ -6,7 +6,7 @@ using XInputDotNetPure;
 public class ShellEntrance : MonoBehaviour
 {
     public Crab attachedCrab;
-    private Shell shell;
+    public Shell shell;
 
     public bool isCrabAttached() {
         return attachedCrab != null;

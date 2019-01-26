@@ -11,6 +11,6 @@ public static class Util
 
 	public static float SquareDistance (Vector3 lhs, Vector3 rhs)
 	{
-		return (lhs - rhs).sqrMagnitude;
+		return (rhs - lhs).sqrMagnitude;
 	}
 }
