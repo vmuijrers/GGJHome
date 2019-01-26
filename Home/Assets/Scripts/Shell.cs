@@ -4,7 +4,7 @@ using UnityEngine;
 using XInputDotNetPure;
 using System.Linq;
 
-public class Shell : MonoBehaviour
+public class Shell : MonoBehaviour, IAttackable
 {
     public ShellEntrance[] entranceList;
 
@@ -48,5 +48,10 @@ public class Shell : MonoBehaviour
         }
             
     }
+
+	public void GetAttacked (int damage)
+	{
+
+	}
 
 }
