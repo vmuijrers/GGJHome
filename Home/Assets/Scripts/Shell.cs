@@ -75,6 +75,7 @@ public class Shell : MonoBehaviour {
 
 	public void GetAttacked (int damage)
 	{
+        CameraShake.OnShake(0.7f, 0.4f, 0.1f);
         if(GetHPLeft() > 0) {
             DetachRandomPickup();
         } else {

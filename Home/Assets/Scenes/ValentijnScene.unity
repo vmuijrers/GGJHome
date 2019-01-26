@@ -630,7 +630,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!108 &1381014692
 Light:
   m_ObjectHideFlags: 0
@@ -641,8 +641,8 @@ Light:
   m_Enabled: 1
   serializedVersion: 8
   m_Type: 1
-  m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
-  m_Intensity: 1
+  m_Color: {r: 0.3426486, g: 0.9433962, b: 0.912748, a: 1}
+  m_Intensity: 0.1
   m_Range: 10
   m_SpotAngle: 30
   m_CookieSize: 10
@@ -896,17 +896,17 @@ PrefabInstance:
     - target: {fileID: 8615342441286166789, guid: 09b0d96bca625f5459cf2823bd28624a,
         type: 3}
       propertyPath: m_Color.r
-      value: 0.07075471
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8615342441286166789, guid: 09b0d96bca625f5459cf2823bd28624a,
         type: 3}
       propertyPath: m_Color.g
-      value: 0.8718275
+      value: 0.7642465
       objectReference: {fileID: 0}
     - target: {fileID: 8615342441286166789, guid: 09b0d96bca625f5459cf2823bd28624a,
         type: 3}
       propertyPath: m_Color.b
-      value: 1
+      value: 0.07058823
       objectReference: {fileID: 0}
     - target: {fileID: 8615342441286166789, guid: 09b0d96bca625f5459cf2823bd28624a,
         type: 3}

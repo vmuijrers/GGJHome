@@ -57,6 +57,7 @@ MonoBehaviour:
   strength: 0.5
   visualBottom: {fileID: 0}
   visualTop: {fileID: 0}
+  pickupPrefab: {fileID: 0}
   renderer: {fileID: 0}
 --- !u!54 &1822917136349511304
 Rigidbody:
@@ -159,7 +160,7 @@ Light:
   m_Enabled: 1
   serializedVersion: 8
   m_Type: 2
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.9811321, g: 0.62991816, b: 0.18974723, a: 1}
   m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30

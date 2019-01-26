@@ -63,6 +63,6 @@ public class Pickup : MonoBehaviour
         }
 
         GetComponent<Rigidbody>().isKinematic = false;
-        GetComponent<Rigidbody>().AddForce(Random.insideUnitSphere * 100);
+        GetComponent<Rigidbody>().AddForce(new Vector3(Random.Range(-1,1),1, Random.Range(-1, 1)) * 100);
     }
 }

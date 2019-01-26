@@ -27,7 +27,7 @@ public class EnemyManager : MonoBehaviour
         Vector2 dir = Random.insideUnitCircle.normalized;
         spawnPos += new Vector3(dir.x, 0, dir.y) * 15;
         IEnemy nextEnemy = Instantiate(Util.Choose(enemyPrefabs), spawnPos, Quaternion.identity).GetComponent<IEnemy>();
-		Debug.Log(nextEnemy.GetType());
+		//Debug.Log(nextEnemy.GetType());
 		nextEnemy.Init(Util.Choose(crabs));
 		yield return StartCoroutine(Spawner());
 	}
