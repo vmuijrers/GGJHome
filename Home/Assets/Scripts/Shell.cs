@@ -12,7 +12,7 @@ public class Shell : MonoBehaviour {
     public float speedModifier = 10;
     public float strength = 0.5f;
     public GameObject visualBottom, visualTop;
-    
+    public Pickup uglyArmorDecoration;
 
     [HideInInspector] public MeshRenderer renderer;
 
@@ -22,6 +22,7 @@ public class Shell : MonoBehaviour {
     private Light light;
     private int numCrabs = 0;
     private List<PickupSlot> decorations = new List<PickupSlot>();
+    
 
     private void Awake() {
         renderer = GetComponentInChildren<MeshRenderer>();
@@ -33,6 +34,16 @@ public class Shell : MonoBehaviour {
         transform.localScale = new Vector3(size, size, size);
         StartCoroutine(PulseLight());
 
+        //foreach(PickupSlot slot in decorations) {
+        //    AttachPickup(Instantiate(uglyArmorDecoration, slot.transform.position, slot.transform.rotation));
+        //}
+
+    }
+    public int GetMaxHP() {
+        return decorations.Count;
+    }
+    public int GetHPLeft() {
+        return decorations.Count(x => x.reference != null);
     }
     private void Update() {
 
@@ -44,7 +55,7 @@ public class Shell : MonoBehaviour {
                 dir += c.GetLeftStickInput();
             }
             dir /= crabCount;
-            DoMove(dir, crabCount * speedModifier);
+            DoMove(dir, speedModifier);
             rigidBody.velocity = Vector3.zero;
         } else {
             rigidBody.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
