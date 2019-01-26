@@ -21,11 +21,11 @@ public class EnemyEel : MonoBehaviour, IEnemy
 	IEnumerator Attack ()
 	{
 		//GO IN FOR THE CRAB
-		Debug.Log("Going in!");
 		bool targetHit = false;
 		float speed = farSpeed;
 		while (!targetHit) {
-			transform.position = Vector3.MoveTowards(transform.position, targetCrabTrans.position, speed * Time.deltaTime);
+			transform.LookAt(targetCrabTrans);
+			transform.position = Vector3.MoveTowards(transform.position, targetCrabTrans.position, speed * Time.deltaTime) + transform.right * Mathf.Sin(Time.time * 20) * .1f;
 
 			float distanceToCrab = Util.SquareDistance(transform.position, targetCrabTrans.position);
 			if (distanceToCrab < closeDistance * closeDistance)
@@ -40,16 +40,15 @@ public class EnemyEel : MonoBehaviour, IEnemy
 		}
 
 		//TARGET HIT, RETREAT
-		Debug.Log("Target hit!");
+		transform.LookAt(exitPosition);
 		while (true) {
-			transform.position = Vector3.MoveTowards(transform.position, exitPosition, exitSpeed * Time.deltaTime);
+			transform.position = Vector3.MoveTowards(transform.position, exitPosition, exitSpeed * Time.deltaTime) + transform.right * Mathf.Sin(Time.time * 8) * .1f;
 			if (Util.SquareDistance(transform.position, exitPosition) < .5f) {
 				break;
 			}
 			yield return null;
 		}
-
-		Debug.Log("Bye!");
+		
 		Destroy(gameObject);
 	}
 }

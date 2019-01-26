@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnemyShrimp : MonoBehaviour, IEnemy
 {
 	Renderer renderer;
+	Transform[] shrimpTransforms;
 
 	Crab[] targetCrabScripts;
 
@@ -14,12 +15,20 @@ public class EnemyShrimp : MonoBehaviour, IEnemy
 	public float maxTurnRate = 360;
 	float turnRate = 0;
 
+	public float shrimpSpinRate = 180;
+
 	public void Init (Crab targetCrab)
 	{
 		renderer = transform.GetChild(0).GetComponent<Renderer>();
 		targetCrabScripts = FindObjectsOfType<Crab>();
 
 		StartCoroutine(Move());
+
+		shrimpTransforms = new Transform[transform.childCount];
+		for (int i = 0; i < transform.childCount; i++) {
+			shrimpTransforms[i] = transform.GetChild(i);
+		}
+		StartCoroutine(SpinningShrimp());
 	}
 
 	IEnumerator Move ()
@@ -55,6 +64,16 @@ public class EnemyShrimp : MonoBehaviour, IEnemy
 				if (Util.SquareDistance(transform.position, targetCrabScripts[i].transform.position) < contactDistance * contactDistance) {
 					targetCrabScripts[i].GetAttacked(damage);
 				}
+			}
+			yield return null;
+		}
+	}
+
+	IEnumerator SpinningShrimp ()
+	{
+		while (true) {
+			foreach (Transform t in shrimpTransforms) {
+				t.Rotate(shrimpSpinRate * Time.deltaTime, 0, 0);
 			}
 			yield return null;
 		}
