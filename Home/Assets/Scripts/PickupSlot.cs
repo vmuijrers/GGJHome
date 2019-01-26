@@ -11,4 +11,7 @@ public class PickupSlot : MonoBehaviour
         
     }
 
+    public void SetReference(GameObject obj) {
+        reference = obj;
+    }
 }
