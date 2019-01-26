@@ -45,9 +45,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb2bc8d1a02200744bbb24f6b83618b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  farSpeed: 3
-  closeSpeed: 8
-  closeDistance: 7
+  farSpeed: 2.5
+  closeSpeed: 9
+  closeDistance: 4
   contactDistance: 1
   damage: 1
 --- !u!1 &4840472653102512359
