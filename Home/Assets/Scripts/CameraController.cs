@@ -15,13 +15,16 @@ public class CameraController : MonoBehaviour
     }
 
     private void OnEnable() {
-        //Message.AddListener(MessageEnum.ON_GRAB_SHELL,gameObject, Shake);
-
-
+        Message.AddListener(MessageEnum.ON_GRAB_SHELL, gameObject, Shake);
     }
 
     private void OnDisable() {
-        //Message.RemoveListenener(MessageEnum.ON_GRAB_SHELL, gameObject, Shake);
+        Message.RemoveListener(MessageEnum.ON_GRAB_SHELL, gameObject, Shake);
     }
 
+    private void Shake() {
+        Debug.Log("Shake!");
+        CameraShake.OnShake(0.3f, 0.5f, 1f);
+
+    }
 }

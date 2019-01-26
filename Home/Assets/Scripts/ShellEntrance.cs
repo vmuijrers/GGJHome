@@ -5,30 +5,22 @@ using XInputDotNetPure;
 
 public class ShellEntrance : MonoBehaviour
 {
-	Shell shell;
-	bool crabAttached = false;
-	Transform attachedCrab = null;
+    public CrabMove attachedCrab;
+    private Shell shell;
 
-	private void Awake ()
-	{
-		shell = transform.parent.GetComponent<Shell>();
-	}
+    public bool isCrabAttached() {
+        return attachedCrab != null;
+    }
 
-	private void OnTriggerStay (Collider other)
-	{
-		if (other.CompareTag("Player") && !crabAttached) {
-			PlayerIndex crabIndex = other.GetComponent<CrabMove>().playerIndex;
-			GamePadState state = GamePad.GetState(crabIndex);
-			if (state.Triggers.Left > .5f) {
-				shell.CrabEnters(crabIndex);
-			}
-		}
-	}
+    public void Init(Shell shell) {
+        this.shell = shell;
+    }
 
-	private void FixedUpdate ()
-	{
-		if (crabAttached) {
+    public void AttachCrab(CrabMove crab) {
+        attachedCrab = crab;
+    }
 
-		}
-	}
+    public void DetachCrab(CrabMove crab) {
+        attachedCrab = null;
+    }
 }

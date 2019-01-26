@@ -9,6 +9,10 @@ public class CameraShake : MonoBehaviour {
     private float strength;
     private float decay;
     private float duration;
+
+    public float strengthVal = 0.1f;
+    public float durationVal = 0.3f;
+    public float decayVal = 0.01f;
     // Use this for initialization
     void Start () {
         originalPos = transform.localPosition;
@@ -28,7 +32,7 @@ public class CameraShake : MonoBehaviour {
         this.decay = decay;
         while(t < 1)
         {
-            transform.localPosition = new Vector3(Random.Range(-this.strength, this.strength), Random.Range(0, this.strength), 0);
+            transform.localPosition = originalPos + new Vector3(Random.Range(-this.strength, this.strength), Random.Range(0, this.strength), 0);
             t += step * Time.deltaTime;
             this.strength -= this.decay * Time.deltaTime;
             this.strength = Mathf.Clamp(this.strength, 0, this.strength);
