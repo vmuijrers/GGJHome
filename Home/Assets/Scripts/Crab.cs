@@ -27,6 +27,8 @@ public class Crab : MonoBehaviour
 	[HideInInspector]
 	public bool dood = false;
 
+    private Collider col;
+
 	private bool isInShell = false;
 	public bool IsInShell
 	{
@@ -37,9 +39,12 @@ public class Crab : MonoBehaviour
 			if (value != isInShell) {
 				if (value) {
 					Message.SendMessage(MessageEnum.ON_GRAB_SHELL);
-				} else {
+                    col.enabled = false;
+
+                } else {
 					Message.SendMessage(MessageEnum.ON_RELEASE_SHELL);
-				}
+                    col.enabled = true;
+                }
 			}
 			isInShell = value;
 		}
@@ -57,7 +62,8 @@ public class Crab : MonoBehaviour
 	{
 		rigidbody = GetComponent<Rigidbody>();
 		renderer = GetComponentInChildren<Renderer>();
-		baseMat = renderer.material;
+        col = GetComponentInChildren<Collider>();
+        baseMat = renderer.material;
 	}
 
 	private void Update ()
@@ -73,9 +79,9 @@ public class Crab : MonoBehaviour
 
 		//Check if in shell and button pressed
 		if (nearestShell != null && gamePadState.Triggers.Left > triggerTreshold) {
-			if (!nearestShell.attachedCrab) {
-				nearestShell.AttachCrab(this);
-			}
+            if (!IsInShell) {
+                nearestShell.AttachCrab(this);
+            }
 			IsInShell = true;
 
 		} else {
@@ -110,10 +116,12 @@ public class Crab : MonoBehaviour
 	private void Move (Vector2 direction)
 	{
 		direction = direction.normalized;
-		if (!IsInShell)
-			rigidbody.velocity = new Vector3(direction.x * speed, 0, direction.y * speed);
-        transform.rotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.y),Vector3.up);
-	}
+		if (!IsInShell) {
+            rigidbody.velocity = new Vector3(direction.x * speed, 0, direction.y * speed);
+            if(direction != Vector2.zero)
+                transform.rotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.y), Vector3.up);
+        }
+    }
 
 	private void OnTriggerEnter (Collider col)
 	{

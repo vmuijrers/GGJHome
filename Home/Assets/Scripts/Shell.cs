@@ -3,38 +3,44 @@ using System.Collections.Generic;
 using UnityEngine;
 using XInputDotNetPure;
 using System.Linq;
+using DG.Tweening;
 
 public class Shell : MonoBehaviour {
 
     public int size = 1;
-    public ShellEntrance[] entranceList;
+    public ShellEntrance entrance;
     public float speedModifier = 10;
+    public float strength = 0.5f;
+    public GameObject visualBottom, visualTop;
+    public List<GameObject> decorations = new List<GameObject>();
 
     [HideInInspector] public MeshRenderer renderer;
 
     private Rigidbody rigidBody;
     private Vector2 direction;
-    private float rotationSpeed = 30f;
+    private float rotationSpeed = 180;
+    private Light light;
+    private int numCrabs = 0;    
 
     private void Awake() {
         renderer = GetComponentInChildren<MeshRenderer>();
         rigidBody = GetComponent<Rigidbody>();
-        entranceList = GetComponentsInChildren<ShellEntrance>();
-        for (int i = 0; i < entranceList.Length; i++) {
-            entranceList[i].Init(this);
-        }
+        entrance = GetComponentInChildren<ShellEntrance>();
+        light = GetComponentInChildren<Light>();
+        entrance.Init(this);
+
         transform.localScale = new Vector3(size, size, size);
+        StartCoroutine(PulseLight());
+
     }
     private void Update() {
 
-        int crabCount = entranceList.Count(x => x.attachedCrab != null);
+        int crabCount = entrance.attachedCrabs.Count;
         if (crabCount > 0) {
-            rigidBody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+            rigidBody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezePositionY;
             Vector2 dir = Vector2.zero;
-            foreach(ShellEntrance c in entranceList) {
-                if(c.attachedCrab != null) {
-                    dir += c.attachedCrab.GetLeftStickInput();
-                }
+            foreach(Crab c in entrance.attachedCrabs) {
+                dir += c.GetLeftStickInput();
             }
             dir /= crabCount;
             DoMove(dir, crabCount * speedModifier);
@@ -47,7 +53,7 @@ public class Shell : MonoBehaviour {
     public void DoMove(Vector2 dir, float speedModifier) {
         rigidBody.velocity = new Vector3(dir.x, 0, dir.y) * speedModifier;
         if(dir.magnitude != 0) {
-            rigidBody.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(rigidBody.velocity, Vector3.up), rotationSpeed * Time.deltaTime);
+            rigidBody.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(new Vector3(dir.x, 0, dir.y), Vector3.up), rotationSpeed * Time.deltaTime);
         }
             
     }
@@ -56,4 +62,18 @@ public class Shell : MonoBehaviour {
 	{
 
 	}
+
+    public IEnumerator PulseLight() {
+        float baseIntensity = light.intensity;
+        while(true) {
+            float value = Mathf.PingPong(Time.time, strength);
+            light.intensity = baseIntensity + value;
+            yield return null;
+        }
+    }
+
+    public void UpdateCrabVisuals(int crabCount) {
+        visualBottom.SetActive(crabCount > 0 ? true :  false);
+        visualTop.SetActive(crabCount > 1 ? true : false);
+    }
 }
