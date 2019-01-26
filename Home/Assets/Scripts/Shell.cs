@@ -4,17 +4,20 @@ using UnityEngine;
 using XInputDotNetPure;
 using System.Linq;
 
-public class Shell : MonoBehaviour, IAttackable
-{
+public class Shell : MonoBehaviour {
+
+    public int size = 1;
     public ShellEntrance[] entranceList;
+    public float speedModifier = 10;
+
+    [HideInInspector] public MeshRenderer renderer;
 
     private Rigidbody rigidBody;
     private Vector2 direction;
     private float rotationSpeed = 30f;
-    public int size = 1;
 
-    public float speedModifier = 10;
     private void Awake() {
+        renderer = GetComponentInChildren<MeshRenderer>();
         rigidBody = GetComponent<Rigidbody>();
         entranceList = GetComponentsInChildren<ShellEntrance>();
         for (int i = 0; i < entranceList.Length; i++) {
@@ -48,10 +51,5 @@ public class Shell : MonoBehaviour, IAttackable
         }
             
     }
-
-	public void GetAttacked (int damage)
-	{
-
-	}
 
 }
