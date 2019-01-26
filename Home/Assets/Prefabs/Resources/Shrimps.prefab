@@ -812,9 +812,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 933a22c6101cb944c8f27780bbf29ef0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 6
+  speed: 7
   secondsPerMovementUpdate: 0.5
-  contactDistance: 1.2
+  contactDistance: 1.25
   damage: 1
   maxTurnRate: 360
 --- !u!1 &5497757214186985685

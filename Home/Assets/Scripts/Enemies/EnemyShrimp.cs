@@ -8,10 +8,10 @@ public class EnemyShrimp : MonoBehaviour, IEnemy
 	
 	Crab[] targetCrabScripts;
 
-	public float speed = 6, secondsPerMovementUpdate = 1.2f, contactDistance = 1f;
+	public float speed = 7, secondsPerMovementUpdate = .5f, contactDistance = 1.25f;
 	public int damage = 1;
 
-	public float maxTurnRate = 60;
+	public float maxTurnRate = 360;
 	float turnRate = 0; 
 
 	public void Init (Crab targetCrab)
