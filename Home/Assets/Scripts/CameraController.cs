@@ -14,14 +14,14 @@ public class CameraController : MonoBehaviour
     private float heightPosition = 7;
     private float viewAngle = 45;
     private List<Transform> transformsToFollow = new List<Transform>();
-    private CrabMove[] crabs;
+    private Crab[] crabs;
     private Shell[] shells;
 
     // Start is called before the first frame update
     void Start()
     {
-        crabs = FindObjectsOfType<CrabMove>();
-        foreach(CrabMove c in crabs) {
+        crabs = FindObjectsOfType<Crab>();
+        foreach(Crab c in crabs) {
             transformsToFollow.Add(c.transform);
         }
         
@@ -39,7 +39,7 @@ public class CameraController : MonoBehaviour
     private void Update() {
         int num = 0;
         Vector3 averagePosition = Vector3.zero;
-        foreach(CrabMove crab in crabs) {
+        foreach(Crab crab in crabs) {
             for(int i=0;i < crabWeight; i++) {
                 averagePosition += crab.transform.position;
                 num++;
