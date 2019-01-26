@@ -8,6 +8,7 @@ public class Crab : MonoBehaviour
 	public PlayerIndex playerIndex = 0;
 	public LayerMask ShellTriggerLayer;
     public LayerMask PickUpTriggerLayer;
+    public LayerMask CrabTriggerLayer;
     public GameObject artReference;
 	private GamePadState gamePadState;
 
@@ -17,6 +18,7 @@ public class Crab : MonoBehaviour
 	private bool isNearShell;
 	private ShellEntrance nearestShell;
     private Pickup nearestPickup;
+    private Crab nearestCrab;
 
 	[Header("Settings")]
 	public float speed = 5;
@@ -30,7 +32,7 @@ public class Crab : MonoBehaviour
 
     private Collider col;
 
-	private bool isInShell = false;
+    private bool isInShell = false;
 	public bool IsInShell
 	{
 		get {
@@ -62,7 +64,7 @@ public class Crab : MonoBehaviour
 		renderer = GetComponentInChildren<Renderer>();
         col = GetComponentInChildren<Collider>();
         baseMat = renderer.material;
-	}
+    }
 
     private void OnEnterShell() {
         Message.SendMessage(MessageEnum.ON_GRAB_SHELL);
@@ -127,6 +129,12 @@ public class Crab : MonoBehaviour
                 }
             }
         }
+
+        if(nearestCrab != null && nearestCrab.dood) {
+            if(gamePadState.Triggers.Right > triggerTreshold) {
+                nearestCrab.OnRevive();
+            }
+        }
 	}
 
 	private void GetInputs ()
@@ -156,6 +164,10 @@ public class Crab : MonoBehaviour
         if ((1 << col.gameObject.layer & PickUpTriggerLayer) != 0 && nearestPickup == null) {
             nearestPickup = col.GetComponent<Pickup>();
         }
+
+        if((1 << col.gameObject.layer & CrabTriggerLayer) != 0 ) {
+            nearestCrab = col.GetComponent<Crab>();
+        }
     }
 
 	private void OnTriggerExit (Collider col)
@@ -172,16 +184,24 @@ public class Crab : MonoBehaviour
             }
             nearestPickup = null;
         }
+        if ((1 << col.gameObject.layer & CrabTriggerLayer) != 0) {
+            if(nearestCrab != null) {
+                nearestCrab = null;
+            }
+            
+        }
     }
 
 	public void GetAttacked (int damage)
 	{
 		if (!IsInShell && !dood) {
 			dood = true;
-			renderer.material = deathMat;
+			//renderer.material = deathMat;
             if(artReference != null) {
-                //Tween deadTween = DOTween.To(transform.rotation, transform.rotation * Quaternion.Euler(0, 0, 180), 0.5f);
-                //artReference.transform.
+                Tween deadTween = artReference.transform.DORotateQuaternion(artReference.transform.rotation * Quaternion.Euler(0,0,180), 0.6f);
+                Tween jumpTween = artReference.transform.DOLocalJump(artReference.transform.localPosition,1,1,0.7f);
+                jumpTween.Play();
+                deadTween.Play();
             }
 			CameraShake.OnShake(.2f, .4f, .05f);
 		} else {
@@ -191,4 +211,11 @@ public class Crab : MonoBehaviour
 			    
 		}
 	}
+
+    public void OnRevive() {
+        DOTween.KillAll();
+        Tween deadTween = artReference.transform.DORotateQuaternion(Quaternion.identity, 0.3f);
+        deadTween.Play();
+        //renderer.material = baseMat;
+    }
 }
