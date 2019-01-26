@@ -38,12 +38,9 @@ public class Crab : MonoBehaviour
 		set {
 			if (value != isInShell) {
 				if (value) {
-					Message.SendMessage(MessageEnum.ON_GRAB_SHELL);
-                    col.enabled = false;
-
+                    OnEnterShell();
                 } else {
-					Message.SendMessage(MessageEnum.ON_RELEASE_SHELL);
-                    col.enabled = true;
+                    OnExitShell();
                 }
 			}
 			isInShell = value;
@@ -66,6 +63,18 @@ public class Crab : MonoBehaviour
         baseMat = renderer.material;
 	}
 
+    private void OnEnterShell() {
+        Message.SendMessage(MessageEnum.ON_GRAB_SHELL);
+        col.enabled = false;
+        rigidbody.isKinematic = true;
+    }
+
+    private void OnExitShell() {
+        Message.SendMessage(MessageEnum.ON_RELEASE_SHELL);
+        col.enabled = true;
+        rigidbody.isKinematic = false;
+    }
+
 	private void Update ()
 	{
 		if (dood)
@@ -78,11 +87,17 @@ public class Crab : MonoBehaviour
 		}
 
 		//Check if in shell and button pressed
-		if (nearestShell != null && gamePadState.Triggers.Left > triggerTreshold) {
-            if (!IsInShell) {
-                nearestShell.AttachCrab(this);
+		if (nearestShell != null) {
+
+            if (gamePadState.Triggers.Left > triggerTreshold) {
+                if (!IsInShell) {
+                    nearestShell.AttachCrab(this);
+                }
+                IsInShell = true;
+            } else {
+                IsInShell = false;
+                nearestShell.DetachCrab(this);
             }
-			IsInShell = true;
 
 		} else {
 			IsInShell = false;
@@ -92,12 +107,18 @@ public class Crab : MonoBehaviour
 		}
 
 		if (IsInShell) {
+            //Add pickup to the shell
+            if (nearestPickup != null) {
+                nearestPickup.FreeJoint();
+                nearestPickup.BreakJoint();
+                nearestPickup.OnAttachToShell();
+                nearestShell.shell.AttachPickup(nearestPickup);
+                nearestPickup = null;
+                
+            }
 			rigidbody.position = Vector3.Scale(nearestShell.transform.position, new Vector3(1, 0, 1));
-
-            //rig.velocity = (targetPosShell.transform.position - transform.position).normalized * 3f;
         } else {
             if (nearestPickup != null) {
-
                 if (gamePadState.Triggers.Right > triggerTreshold) {
                     nearestPickup.SetCrabToJoint(rigidbody);
                 } else {
