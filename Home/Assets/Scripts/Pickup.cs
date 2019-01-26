@@ -2,13 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum DecorationType { Basic, Star }
 public class Pickup : MonoBehaviour
 {
+    public DecorationType type;
     private ConfigurableJoint joint;
+    private GameObject artRef;
     // Start is called before the first frame update
     void Start()
     {
         joint = GetComponent<ConfigurableJoint>();
+
+
+    }
+    public void Init(DecorationType type) {
+        switch (type) {
+            case DecorationType.Basic: artRef = (GameObject)Instantiate(Resources.Load("Pickups/Basic"), transform.position, transform.rotation); break;
+            case DecorationType.Star: artRef = (GameObject)Instantiate(Resources.Load("Pickups/Star"), transform.position, transform.rotation); break;
+        }
     }
 
     // Update is called once per frame
@@ -43,5 +54,15 @@ public class Pickup : MonoBehaviour
         }
 
         GetComponent<Rigidbody>().isKinematic = true;
+    }
+
+    public void OnDetachFromShell() {
+        Collider[] col = GetComponentsInChildren<Collider>();
+        foreach (Collider c in col) {
+            c.enabled = true;
+        }
+
+        GetComponent<Rigidbody>().isKinematic = false;
+        GetComponent<Rigidbody>().AddForce(Random.insideUnitSphere * 100);
     }
 }
