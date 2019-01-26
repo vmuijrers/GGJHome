@@ -12,6 +12,14 @@ public class ShellEntrance : MonoBehaviour
         this.shell = shell;
     }
 
+    public void Update() {
+        attachedCrabs.ForEach(x => {
+            x.transform.rotation = Quaternion.LookRotation(transform.forward);
+            x.transform.position = transform.position;
+
+            }
+        );
+    }
     public void AttachCrab(Crab crab) {
         if (!attachedCrabs.Contains(crab)) {
             attachedCrabs.Add(crab);

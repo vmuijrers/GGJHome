@@ -30,7 +30,7 @@ public class Crab : MonoBehaviour
 	[HideInInspector]
 	public bool dood = false;
 
-    private Collider col;
+    private Collider[] cols;
 
     private bool isInShell = false;
 	public bool IsInShell
@@ -62,20 +62,27 @@ public class Crab : MonoBehaviour
 	{
 		rigidbody = GetComponent<Rigidbody>();
 		renderer = GetComponentInChildren<Renderer>();
-        col = GetComponentInChildren<Collider>();
+        cols = GetComponentsInChildren<Collider>();
         baseMat = renderer.material;
     }
 
     private void OnEnterShell() {
         Message.SendMessage(MessageEnum.ON_GRAB_SHELL);
-        col.enabled = false;
+        SetColliders(false);
+
         rigidbody.isKinematic = true;
     }
 
     private void OnExitShell() {
         Message.SendMessage(MessageEnum.ON_RELEASE_SHELL);
-        col.enabled = true;
+        SetColliders(true);
         rigidbody.isKinematic = false;
+    }
+
+    private void SetColliders(bool value) {
+        foreach (Collider c in cols) {
+            c.enabled = value;
+        }
     }
 
 	private void Update ()
@@ -216,6 +223,7 @@ public class Crab : MonoBehaviour
         DOTween.KillAll();
         Tween deadTween = artReference.transform.DORotateQuaternion(Quaternion.identity, 0.3f);
         deadTween.Play();
+        dood = false;
         //renderer.material = baseMat;
     }
 }

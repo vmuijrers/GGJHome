@@ -38,14 +38,14 @@ public class Shell : MonoBehaviour {
 
         int crabCount = entrance.attachedCrabs.Count;
         if (crabCount > 0) {
-            rigidBody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezePositionY;
+            rigidBody.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionY;
             Vector2 dir = Vector2.zero;
             foreach(Crab c in entrance.attachedCrabs) {
                 dir += c.GetLeftStickInput();
             }
             dir /= crabCount;
             DoMove(dir, crabCount * speedModifier);
-
+            rigidBody.velocity = Vector3.zero;
         } else {
             rigidBody.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
         }
