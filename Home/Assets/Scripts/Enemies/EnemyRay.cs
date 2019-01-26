@@ -14,7 +14,7 @@ public class EnemyRay : MonoBehaviour, IEnemy
 
 	public void Init (Crab targetCrab)
 	{
-		renderer = GetComponent<Renderer>();
+		renderer = transform.GetComponentInChildren<Renderer>();
 		targetCrabScript = targetCrab;
 		targetCrabTrans = targetCrab.transform;
 		StartCoroutine(Move());
@@ -23,7 +23,6 @@ public class EnemyRay : MonoBehaviour, IEnemy
 	IEnumerator Move ()
 	{
 		//GO IN FOR THE CRAB
-		Debug.Log("Going in!");
 		bool closeToTarget = false;
 		float speed = farSpeed;
 		while (!closeToTarget) {
@@ -49,8 +48,7 @@ public class EnemyRay : MonoBehaviour, IEnemy
 				inScope = false;
 			yield return null;
 		}
-
-		Debug.Log("Bye!");
+		
 		Destroy(gameObject);
 	}
 

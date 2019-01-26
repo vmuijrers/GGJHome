@@ -23,7 +23,10 @@ public class EnemyManager : MonoBehaviour
 	IEnumerator Spawner ()
 	{
 		yield return new WaitForSeconds(timeBetweenSpawns);
-		IEnemy nextEnemy = Instantiate(Util.Choose(enemyPrefabs), new Vector3(15, 0, 15), Quaternion.identity).GetComponent<IEnemy>();
+        Vector3 spawnPos = new Vector3(Camera.main.transform.position.x, 0, Camera.main.transform.position.z);
+        Vector2 dir = Random.insideUnitCircle.normalized;
+        spawnPos += new Vector3(dir.x, 0, dir.y) * 15;
+        IEnemy nextEnemy = Instantiate(Util.Choose(enemyPrefabs), spawnPos, Quaternion.identity).GetComponent<IEnemy>();
 		Debug.Log(nextEnemy.GetType());
 		nextEnemy.Init(Util.Choose(crabs));
 		yield return StartCoroutine(Spawner());

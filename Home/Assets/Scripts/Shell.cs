@@ -12,7 +12,7 @@ public class Shell : MonoBehaviour {
     public float speedModifier = 10;
     public float strength = 0.5f;
     public GameObject visualBottom, visualTop;
-    
+    public Pickup pickupPrefab;
 
     [HideInInspector] public MeshRenderer renderer;
 
@@ -22,6 +22,7 @@ public class Shell : MonoBehaviour {
     private Light light;
     private int numCrabs = 0;
     private List<PickupSlot> decorations = new List<PickupSlot>();
+    
 
     private void Awake() {
         renderer = GetComponentInChildren<MeshRenderer>();
@@ -33,19 +34,31 @@ public class Shell : MonoBehaviour {
         transform.localScale = new Vector3(size, size, size);
         StartCoroutine(PulseLight());
 
+        foreach (PickupSlot slot in decorations) {
+            Pickup pickup = Instantiate(pickupPrefab, slot.transform.position, slot.transform.rotation);
+            pickup.Init(DecorationType.Basic);
+            AttachPickup(pickup);
+        }
+
+    }
+    public int GetMaxHP() {
+        return decorations.Count;
+    }
+    public int GetHPLeft() {
+        return decorations.Count(x => x.reference != null);
     }
     private void Update() {
 
         int crabCount = entrance.attachedCrabs.Count;
         if (crabCount > 0) {
-            rigidBody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezePositionY;
+            rigidBody.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionY;
             Vector2 dir = Vector2.zero;
             foreach(Crab c in entrance.attachedCrabs) {
                 dir += c.GetLeftStickInput();
             }
             dir /= crabCount;
-            DoMove(dir, crabCount * speedModifier);
-
+            DoMove(dir, speedModifier);
+            rigidBody.velocity = Vector3.zero;
         } else {
             rigidBody.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
         }
@@ -62,8 +75,16 @@ public class Shell : MonoBehaviour {
 
 	public void GetAttacked (int damage)
 	{
-
+        if(GetHPLeft() > 0) {
+            DetachRandomPickup();
+        } else {
+            BreakShell();
+        }
 	}
+
+    void BreakShell() {
+        Debug.Log("Shell Broken");
+    }
 
     public void AttachPickup(Pickup pickup) {
         foreach(PickupSlot obj in decorations) {
@@ -76,6 +97,16 @@ public class Shell : MonoBehaviour {
             }
         }
         
+    }
+    public void DetachRandomPickup() {
+        foreach(PickupSlot obj in decorations) {
+            if(obj.reference != null) {
+                Pickup pickup = obj.reference.GetComponent<Pickup>();
+                pickup.OnDetachFromShell();
+                obj.reference = null;
+                break;
+            }
+        }
     }
 
     public IEnumerator PulseLight() {

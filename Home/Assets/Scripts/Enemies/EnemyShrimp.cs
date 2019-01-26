@@ -5,32 +5,36 @@ using UnityEngine;
 public class EnemyShrimp : MonoBehaviour, IEnemy
 {
 	Renderer renderer;
+	Transform[] shrimpTransforms;
 
-	Transform[] targetCrabTransforms;
 	Crab[] targetCrabScripts;
 
-	public float speed = 6, secondsPerMovementUpdate = 1.2f, contactDistance = .5f;
+	public float speed = 7, secondsPerMovementUpdate = .5f, contactDistance = 1.25f;
 	public int damage = 1;
 
-	public float maxTurnRate = 60;
-	float turnRate = 0; 
+	public float maxTurnRate = 360;
+	float turnRate = 0;
+
+	public float shrimpSpinRate = 180;
 
 	public void Init (Crab targetCrab)
 	{
 		renderer = transform.GetChild(0).GetComponent<Renderer>();
 		targetCrabScripts = FindObjectsOfType<Crab>();
-		targetCrabTransforms = new Transform[targetCrabScripts.Length];
-		for (int i = 0; i < targetCrabScripts.Length; i++) {
-			targetCrabTransforms[i] = targetCrabScripts[i].transform;
-		}
 
 		StartCoroutine(Move());
+
+		shrimpTransforms = new Transform[transform.childCount];
+		for (int i = 0; i < transform.childCount; i++) {
+			shrimpTransforms[i] = transform.GetChild(i);
+		}
+		StartCoroutine(SpinningShrimp());
 	}
 
 	IEnumerator Move ()
 	{
 		StartCoroutine(CheckForCrab());
-		transform.LookAt(Util.Choose(targetCrabTransforms));
+		transform.LookAt(Util.Choose(targetCrabScripts).transform);
 
 		float timer = 0;
 		bool hasBeenVisible = false;
@@ -50,17 +54,26 @@ public class EnemyShrimp : MonoBehaviour, IEnemy
 			yield return null;
 		}
 
-		Debug.Log("Bye!");
 		Destroy(gameObject);
 	}
 
 	IEnumerator CheckForCrab ()
 	{
 		while (true) {
-			for (int i=0; i< targetCrabTransforms.Length; i++) {
-				if (Util.SquareDistance(transform.position, targetCrabTransforms[i].position) < contactDistance * contactDistance) {
+			for (int i = 0; i < targetCrabScripts.Length; i++) {
+				if (Util.SquareDistance(transform.position, targetCrabScripts[i].transform.position) < contactDistance * contactDistance) {
 					targetCrabScripts[i].GetAttacked(damage);
 				}
+			}
+			yield return null;
+		}
+	}
+
+	IEnumerator SpinningShrimp ()
+	{
+		while (true) {
+			foreach (Transform t in shrimpTransforms) {
+				t.Rotate(0, 0, -shrimpSpinRate * Time.deltaTime);
 			}
 			yield return null;
 		}
