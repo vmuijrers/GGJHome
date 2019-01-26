@@ -19,4 +19,16 @@ public class Pickup : MonoBehaviour
             //transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(joint.connectedBody.transform.position - transform.position), 180f *Time.deltaTime);
         }
     }
+
+    public void SetCrabToJoint(Rigidbody rb) {
+        joint.connectedBody = rb;
+        joint.xMotion = ConfigurableJointMotion.Limited;
+        joint.zMotion = ConfigurableJointMotion.Limited;
+    }
+
+    public void FreeJoint() {
+        joint.xMotion = ConfigurableJointMotion.Free;
+        joint.zMotion = ConfigurableJointMotion.Free;
+        joint.connectedBody = null;
+    }
 }

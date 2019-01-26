@@ -7,6 +7,7 @@ public class Crab : MonoBehaviour
 {
 	public PlayerIndex playerIndex = 0;
 	public LayerMask ShellTriggerLayer;
+    public LayerMask PickUpTriggerLayer;
 	private GamePadState gamePadState;
 
 	private Vector2 leftStickInput;
@@ -14,6 +15,7 @@ public class Crab : MonoBehaviour
 	private Rigidbody rigidbody;
 	private bool isNearShell;
 	private ShellEntrance nearestShell;
+    private Pickup nearestPickup;
 
 	[Header("Settings")]
 	public float speed = 5;
@@ -54,7 +56,7 @@ public class Crab : MonoBehaviour
 	private void Awake ()
 	{
 		rigidbody = GetComponent<Rigidbody>();
-		renderer = GetComponent<Renderer>();
+		renderer = GetComponentInChildren<Renderer>();
 		baseMat = renderer.material;
 	}
 
@@ -82,8 +84,18 @@ public class Crab : MonoBehaviour
 
 		if (IsInShell) {
 			rigidbody.position = Vector3.Scale(nearestShell.transform.position, new Vector3(1, 0, 1));
-			//rig.velocity = (targetPosShell.transform.position - transform.position).normalized * 3f;
-		}
+
+            //rig.velocity = (targetPosShell.transform.position - transform.position).normalized * 3f;
+        } else {
+            if (nearestPickup != null) {
+
+                if (gamePadState.Triggers.Right > triggerTreshold) {
+                    nearestPickup.SetCrabToJoint(rigidbody);
+                } else {
+                    nearestPickup.FreeJoint();
+                }
+            }
+        }
 	}
 
 	private void GetInputs ()
@@ -97,7 +109,7 @@ public class Crab : MonoBehaviour
 		direction = direction.normalized;
 		if (!IsInShell)
 			rigidbody.velocity = new Vector3(direction.x * speed, 0, direction.y * speed);
-
+        transform.rotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.y),Vector3.up);
 	}
 
 	private void OnTriggerEnter (Collider col)
@@ -107,7 +119,11 @@ public class Crab : MonoBehaviour
 			isNearShell = true;
 			nearestShell = col.GetComponent<ShellEntrance>();
 		}
-	}
+
+        if ((1 << col.gameObject.layer & PickUpTriggerLayer) != 0 && nearestPickup == null) {
+            nearestPickup = col.GetComponent<Pickup>();
+        }
+    }
 
 	private void OnTriggerExit (Collider col)
 	{
@@ -116,7 +132,14 @@ public class Crab : MonoBehaviour
 			isNearShell = false;
 			nearestShell = null;
 		}
-	}
+
+        if ((1 << col.gameObject.layer & PickUpTriggerLayer) != 0) { 
+            if (nearestPickup != null) {
+                nearestPickup.FreeJoint();
+            }
+            nearestPickup = null;
+        }
+    }
 
 	public void GetAttacked (int damage)
 	{
