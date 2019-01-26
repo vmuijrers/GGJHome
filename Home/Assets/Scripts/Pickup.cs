@@ -14,7 +14,7 @@ public class Pickup : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(joint.connectedBody != null) {
+        if (joint != null && joint.connectedBody != null) {
             transform.LookAt(joint.connectedBody.transform.position);
             //transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(joint.connectedBody.transform.position - transform.position), 180f *Time.deltaTime);
         }
@@ -30,5 +30,18 @@ public class Pickup : MonoBehaviour
         joint.xMotion = ConfigurableJointMotion.Free;
         joint.zMotion = ConfigurableJointMotion.Free;
         joint.connectedBody = null;
+    }
+
+    public void BreakJoint() {
+        Destroy(joint);
+    }
+
+    public void OnAttachToShell() {
+        Collider[] col = GetComponentsInChildren<Collider>();
+        foreach(Collider c in col) {
+            c.enabled = false;
+        }
+
+        GetComponent<Rigidbody>().isKinematic = true;
     }
 }

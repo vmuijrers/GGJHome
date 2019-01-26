@@ -12,7 +12,7 @@ public class Shell : MonoBehaviour {
     public float speedModifier = 10;
     public float strength = 0.5f;
     public GameObject visualBottom, visualTop;
-    public List<GameObject> decorations = new List<GameObject>();
+    
 
     [HideInInspector] public MeshRenderer renderer;
 
@@ -20,7 +20,8 @@ public class Shell : MonoBehaviour {
     private Vector2 direction;
     private float rotationSpeed = 180;
     private Light light;
-    private int numCrabs = 0;    
+    private int numCrabs = 0;
+    private List<PickupSlot> decorations = new List<PickupSlot>();
 
     private void Awake() {
         renderer = GetComponentInChildren<MeshRenderer>();
@@ -28,7 +29,7 @@ public class Shell : MonoBehaviour {
         entrance = GetComponentInChildren<ShellEntrance>();
         light = GetComponentInChildren<Light>();
         entrance.Init(this);
-
+        decorations = GetComponentsInChildren<PickupSlot>().ToList();
         transform.localScale = new Vector3(size, size, size);
         StartCoroutine(PulseLight());
 
@@ -51,8 +52,9 @@ public class Shell : MonoBehaviour {
     }
 
     public void DoMove(Vector2 dir, float speedModifier) {
-        rigidBody.velocity = new Vector3(dir.x, 0, dir.y) * speedModifier;
-        if(dir.magnitude != 0) {
+        //rigidBody.velocity = new Vector3(dir.x, 0, dir.y) * speedModifier;
+        rigidBody.MovePosition(rigidBody.position + new Vector3(dir.x, 0, dir.y) * speedModifier * Time.deltaTime);
+        if (dir.magnitude != 0) {
             rigidBody.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(new Vector3(dir.x, 0, dir.y), Vector3.up), rotationSpeed * Time.deltaTime);
         }
             
@@ -62,6 +64,19 @@ public class Shell : MonoBehaviour {
 	{
 
 	}
+
+    public void AttachPickup(Pickup pickup) {
+        foreach(PickupSlot obj in decorations) {
+            if(obj.reference == null) {
+                obj.reference = pickup.gameObject;
+                pickup.transform.SetParent(obj.transform,false);
+                pickup.transform.localPosition = Vector3.zero;
+                pickup.transform.localRotation = Quaternion.identity;
+                break;
+            }
+        }
+        
+    }
 
     public IEnumerator PulseLight() {
         float baseIntensity = light.intensity;
@@ -73,7 +88,9 @@ public class Shell : MonoBehaviour {
     }
 
     public void UpdateCrabVisuals(int crabCount) {
-        visualBottom.SetActive(crabCount > 0 ? true :  false);
-        visualTop.SetActive(crabCount > 1 ? true : false);
+        if(visualBottom)
+            visualBottom.SetActive(crabCount > 0 ? true :  false);
+        if(visualTop)
+            visualTop.SetActive(crabCount > 1 ? true : false);
     }
 }
