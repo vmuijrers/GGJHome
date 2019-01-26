@@ -11,7 +11,6 @@ public class EnemyRay : MonoBehaviour, IEnemy
 
 	public float farSpeed = 3, closeSpeed = 8, closeDistance = 7, contactDistance = 1;
 	public int damage = 1;
-	Vector3 exitPosition = new Vector3(-15, 0, -15);
 
 	public void Init (Crab targetCrab)
 	{
