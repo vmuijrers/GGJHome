@@ -102,7 +102,8 @@ GameObject:
   - component: {fileID: 7458482281035708763}
   - component: {fileID: 7458482281035708765}
   - component: {fileID: 7458482281035708762}
-  m_Layer: 0
+  - component: {fileID: 7433950080509259407}
+  m_Layer: 11
   m_Name: CrabOne
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -160,10 +161,27 @@ MonoBehaviour:
   PickUpTriggerLayer:
     serializedVersion: 2
     m_Bits: 1024
+  CrabTriggerLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  artReference: {fileID: 8246709252908138918}
   speed: 5
   triggerTreshold: 0.5
   deathMat: {fileID: 2100000, guid: 410a6886d50223d4cbbd18f882683839, type: 2}
   dood: 0
+--- !u!135 &7433950080509259407
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7458482281035708759}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1
+  m_Center: {x: 0, y: 0.42, z: 0}
 --- !u!1001 &8246709252908238702
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -225,6 +243,12 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 19d63947979e46948b56ba15a35800f1, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 418234db87ece1445be2640f37761d1b, type: 3}
+--- !u!1 &8246709252908138918 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100040, guid: 418234db87ece1445be2640f37761d1b,
+    type: 3}
+  m_PrefabInstance: {fileID: 8246709252908238702}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8246709252908113350 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400040, guid: 418234db87ece1445be2640f37761d1b,
