@@ -52,4 +52,8 @@ public class Shell : MonoBehaviour {
             
     }
 
+	public void GetAttacked (int damage)
+	{
+
+	}
 }

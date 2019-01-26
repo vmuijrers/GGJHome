@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
 {
-	public float timeBetweenSpawns = 4;
+	public float timeBetweenSpawns = 1;
 	public GameObject eelPrefab;
 	List<EnemyEel> activeEels = new List<EnemyEel>();
 	Crab[] crabs;
@@ -18,8 +18,9 @@ public class EnemyManager : MonoBehaviour
 	IEnumerator Spawner ()
 	{
 		yield return new WaitForSeconds(timeBetweenSpawns);
-		activeEels.Add(Instantiate(eelPrefab, new Vector3(10, 0, 10), Quaternion.identity).GetComponent<EnemyEel>());
-		activeEels[activeEels.Count - 1].Init(Util.Choose(crabs));
+		EnemyEel nextEel = Instantiate(eelPrefab, new Vector3(15, 0, 15), Quaternion.identity).GetComponent<EnemyEel>();
+		activeEels.Add(nextEel);
+		nextEel.Init(Util.Choose(crabs));
 		yield return StartCoroutine(Spawner());
 	}
 }

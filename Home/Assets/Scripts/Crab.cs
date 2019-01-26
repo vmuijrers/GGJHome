@@ -7,22 +7,23 @@ public class Crab : MonoBehaviour
 {
 	public PlayerIndex playerIndex = 0;
 	public LayerMask ShellTriggerLayer;
-    public LayerMask PickUpLayer;
-
-    private GamePadState gamePadState;
+	private GamePadState gamePadState;
 
 	private Vector2 leftStickInput;
 	private float leftTrigger;
-	private Rigidbody rig;
+	private Rigidbody rigidbody;
 	private bool isNearShell;
 	private ShellEntrance nearestShell;
-    private ConfigurableJoint nearestPickup;
 
 	[Header("Settings")]
 	public float speed = 5;
 	[SerializeField] private float triggerTreshold = 0.5f;
 
-    private ConfigurableJoint joint;
+	Renderer renderer;
+	Material baseMat;
+	public Material deathMat;
+	[HideInInspector]
+	public bool dood = false;
 
 	private bool isInShell = false;
 	public bool IsInShell
@@ -52,10 +53,10 @@ public class Crab : MonoBehaviour
 	}
 	private void Awake ()
 	{
-		rig = GetComponent<Rigidbody>();
-        joint = GetComponent<ConfigurableJoint>();
-
-    }
+		rigidbody = GetComponent<Rigidbody>();
+		renderer = GetComponent<Renderer>();
+		baseMat = renderer.material;
+	}
 
 	private void Update ()
 	{
@@ -79,41 +80,24 @@ public class Crab : MonoBehaviour
 			}
 		}
 
-
-
 		if (IsInShell) {
-			rig.position = Vector3.Scale(nearestShell.transform.position, new Vector3(1, 0, 1));
-            //rig.velocity = (targetPosShell.transform.position - transform.position).normalized * 3f;
-        } else {
-            if (nearestPickup != null) {
-                if (gamePadState.Triggers.Right > 0.5f) {
-                    nearestPickup.xMotion = ConfigurableJointMotion.Limited;
-                    nearestPickup.zMotion = ConfigurableJointMotion.Limited;
-
-                    nearestPickup.connectedBody = rig;
-                } else {
-                    nearestPickup.xMotion = ConfigurableJointMotion.Free;
-                    nearestPickup.zMotion = ConfigurableJointMotion.Free;
-                    nearestPickup.connectedBody = null;
-                }
-            }
-
-        }
+			rigidbody.position = Vector3.Scale(nearestShell.transform.position, new Vector3(1, 0, 1));
+			//rig.velocity = (targetPosShell.transform.position - transform.position).normalized * 3f;
+		}
 	}
 
 	private void GetInputs ()
 	{
 		leftStickInput = new Vector2(gamePadState.ThumbSticks.Left.X, gamePadState.ThumbSticks.Left.Y);
 		leftTrigger = gamePadState.Triggers.Left;
-
 	}
 
 	private void Move (Vector2 direction)
 	{
 		direction = direction.normalized;
 		if (!IsInShell)
-			rig.velocity = new Vector3(direction.x * speed, 0, direction.y * speed);
-        transform.rotation = Quaternion.LookRotation(new Vector3(direction.x,0,direction.y) , Vector3.up);
+			rigidbody.velocity = new Vector3(direction.x * speed, 0, direction.y * speed);
+
 	}
 
 	private void OnTriggerEnter (Collider col)
@@ -123,11 +107,7 @@ public class Crab : MonoBehaviour
 			isNearShell = true;
 			nearestShell = col.GetComponent<ShellEntrance>();
 		}
-
-        if ((1 << col.gameObject.layer & PickUpLayer) != 0) {
-            nearestPickup = col.gameObject.GetComponent<ConfigurableJoint>();
-        }
-    }
+	}
 
 	private void OnTriggerExit (Collider col)
 	{
@@ -136,17 +116,14 @@ public class Crab : MonoBehaviour
 			isNearShell = false;
 			nearestShell = null;
 		}
-
-        if ((1 << col.gameObject.layer & PickUpLayer) != 0) {
-            if(nearestPickup != null) {
-                nearestPickup.connectedBody = null;
-            }
-            nearestPickup = null;
-        }
-    }
+	}
 
 	public void GetAttacked (int damage)
 	{
-
+		if (!IsInShell) {
+			dood = true;
+		} else {
+			nearestShell.shell.GetAttacked(damage);
+		}
 	}
 }

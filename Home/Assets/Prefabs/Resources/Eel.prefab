@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 3366284012911008349}
   - component: {fileID: 4043141848269411923}
   - component: {fileID: 9202207265165103769}
-  - component: {fileID: 5542467325384799402}
   - component: {fileID: 1539704666244944532}
+  - component: {fileID: 4097074227380480472}
   m_Layer: 0
   m_Name: Eel
   m_TagString: Untagged
@@ -79,19 +79,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!135 &5542467325384799402
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4035138810349359860}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!96 &1539704666244944532
 TrailRenderer:
   serializedVersion: 2
@@ -187,3 +174,15 @@ TrailRenderer:
   m_MinVertexDistance: 0.1
   m_Autodestruct: 0
   m_Emitting: 1
+--- !u!114 &4097074227380480472
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4035138810349359860}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c9dfbaee5e30904f9e3bca7bb093c80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
