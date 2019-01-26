@@ -30,7 +30,8 @@ public class CameraShake : MonoBehaviour {
         this.strength = strength;
         this.duration = duration;
         this.decay = decay;
-        while(t < 1)
+        originalPos = transform.localPosition;
+        while (t < 1)
         {
             transform.localPosition = originalPos + new Vector3(Random.Range(-this.strength, this.strength), Random.Range(0, this.strength), 0);
             t += step * Time.deltaTime;
