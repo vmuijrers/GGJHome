@@ -43,6 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 715474782be0efc439a6d36d01af47a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeBetweenSpawns: 1
-  eelPrefab: {fileID: 4035138810349359860, guid: a862998bbf4adca44a292eb1e6c51381,
-    type: 3}
+  timeBetweenSpawns: 2.5
+  enemyPrefabs:
+  - {fileID: 3146745934661284111, guid: 76376e0fa442b3d41a2547e78c9ab513, type: 3}
+  - {fileID: 4035138810349359860, guid: a862998bbf4adca44a292eb1e6c51381, type: 3}
