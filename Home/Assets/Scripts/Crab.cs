@@ -2,12 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using XInputDotNetPure;
-
+using DG.Tweening;
 public class Crab : MonoBehaviour
 {
 	public PlayerIndex playerIndex = 0;
 	public LayerMask ShellTriggerLayer;
     public LayerMask PickUpTriggerLayer;
+    public GameObject artReference;
 	private GamePadState gamePadState;
 
 	private Vector2 leftStickInput;
@@ -178,9 +179,16 @@ public class Crab : MonoBehaviour
 		if (!IsInShell && !dood) {
 			dood = true;
 			renderer.material = deathMat;
+            if(artReference != null) {
+                //Tween deadTween = DOTween.To(transform.rotation, transform.rotation * Quaternion.Euler(0, 0, 180), 0.5f);
+                //artReference.transform.
+            }
 			CameraShake.OnShake(.2f, .4f, .05f);
 		} else {
-			nearestShell.shell.GetAttacked(damage);
+            if (nearestShell != null) {
+                nearestShell.shell.GetAttacked(damage);
+            }
+			    
 		}
 	}
 }
