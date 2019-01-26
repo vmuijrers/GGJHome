@@ -11,21 +11,21 @@ public class EnemyManager : MonoBehaviour
 {
 	public float timeBetweenSpawns = 1;
 	public GameObject[] enemyPrefabs;
-	List<IEnemy> activeEels = new List<IEnemy>();
 	Crab[] crabs;
 
 	void Start ()
 	{
 		crabs = FindObjectsOfType<Crab>();
+		Debug.Log(Util.Choose(crabs).gameObject.name);
 		StartCoroutine(Spawner());
 	}
 
 	IEnumerator Spawner ()
 	{
 		yield return new WaitForSeconds(timeBetweenSpawns);
-		IEnemy nextEel = Instantiate(Util.Choose(enemyPrefabs), new Vector3(15, 0, 15), Quaternion.identity).GetComponent<EnemyEel>();
-		activeEels.Add(nextEel);
-		nextEel.Init(Util.Choose(crabs));
+		IEnemy nextEnemy = Instantiate(Util.Choose(enemyPrefabs), new Vector3(15, 0, 15), Quaternion.identity).GetComponent<IEnemy>();
+		Debug.Log(nextEnemy.GetType());
+		nextEnemy.Init(Util.Choose(crabs));
 		yield return StartCoroutine(Spawner());
 	}
 }

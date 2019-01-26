@@ -7,9 +7,8 @@ public class EnemyEel : MonoBehaviour, IEnemy
 	Transform targetCrabTrans;
 	Crab targetCrabScript;
 
-	public const float farSpeed = 6, closeSpeed = 10, exitSpeed = 7, closeDistance = 7, contactDistance = 1;
+	const float farSpeed = 6, closeSpeed = 10, exitSpeed = 7, closeDistance = 7, contactDistance = 1;
 	public int damage = 1;
-	float speed = farSpeed;
 	Vector3 exitPosition = new Vector3(-15, 0, -15);
 
 	public void Init (Crab targetCrab)
@@ -24,6 +23,7 @@ public class EnemyEel : MonoBehaviour, IEnemy
 		//GO IN FOR THE CRAB
 		Debug.Log("Going in!");
 		bool targetHit = false;
+		float speed = farSpeed;
 		while (!targetHit) {
 			transform.position = Vector3.MoveTowards(transform.position, targetCrabTrans.position, speed * Time.deltaTime);
 

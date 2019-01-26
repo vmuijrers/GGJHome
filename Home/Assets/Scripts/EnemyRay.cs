@@ -9,9 +9,8 @@ public class EnemyRay : MonoBehaviour, IEnemy
 	Transform targetCrabTrans;
 	Crab targetCrabScript;
 
-	public const float farSpeed = 3, closeSpeed = 8, closeDistance = 7, contactDistance = 1;
+	public float farSpeed = 3, closeSpeed = 8, closeDistance = 7, contactDistance = 1;
 	public int damage = 1;
-	float speed = farSpeed;
 	Vector3 exitPosition = new Vector3(-15, 0, -15);
 
 	public void Init (Crab targetCrab)
@@ -27,6 +26,7 @@ public class EnemyRay : MonoBehaviour, IEnemy
 		//GO IN FOR THE CRAB
 		Debug.Log("Going in!");
 		bool closeToTarget = false;
+		float speed = farSpeed;
 		while (!closeToTarget) {
 			transform.LookAt(targetCrabTrans);
 			transform.position += transform.forward * farSpeed * Time.deltaTime;

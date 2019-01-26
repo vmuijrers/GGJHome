@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 3495895860206533521}
   - component: {fileID: 3991115948931591845}
   - component: {fileID: 7353393829321043225}
-  - component: {fileID: 9161131584921627236}
   - component: {fileID: 96303979432072419}
+  - component: {fileID: 3773831940856180038}
   m_Layer: 0
   m_Name: Ray
   m_TagString: Untagged
@@ -28,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3146745934661284111}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.28, y: 0, z: 1.82}
+  m_LocalPosition: {x: -6.48, y: 2.78, z: -7.23}
   m_LocalScale: {x: 4, y: 0.5, z: 2}
   m_Children: []
   m_Father: {fileID: 0}
@@ -79,19 +79,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!135 &9161131584921627236
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3146745934661284111}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!96 &96303979432072419
 TrailRenderer:
   serializedVersion: 2
@@ -131,7 +118,7 @@ TrailRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Time: 0.2
+  m_Time: 0.4
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 3
@@ -197,3 +184,20 @@ TrailRenderer:
   m_MinVertexDistance: 0.1
   m_Autodestruct: 0
   m_Emitting: 1
+--- !u!114 &3773831940856180038
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3146745934661284111}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb2bc8d1a02200744bbb24f6b83618b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  farSpeed: 3
+  closeSpeed: 8
+  closeDistance: 7
+  contactDistance: 1
+  damage: 1
