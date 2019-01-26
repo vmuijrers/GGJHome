@@ -812,7 +812,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 933a22c6101cb944c8f27780bbf29ef0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 12
+  speed: 6
   secondsPerMovementUpdate: 0.7
   contactDistance: 0.5
   damage: 1
