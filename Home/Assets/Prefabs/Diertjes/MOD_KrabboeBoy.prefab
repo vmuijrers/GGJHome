@@ -732,7 +732,7 @@ MonoBehaviour:
   m_Root: {fileID: 2422152326140599609}
   m_UpdateRate: 60
   m_UpdateMode: 0
-  m_Damping: 0.1
+  m_Damping: 0.6
   m_DampingDistrib:
     serializedVersion: 2
     m_Curve: []
@@ -746,7 +746,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  m_Stiffness: 0.1
+  m_Stiffness: 0.3
   m_StiffnessDistrib:
     serializedVersion: 2
     m_Curve: []
@@ -792,7 +792,7 @@ MonoBehaviour:
   m_Root: {fileID: 398622428285440369}
   m_UpdateRate: 60
   m_UpdateMode: 0
-  m_Damping: 0.1
+  m_Damping: 0.6
   m_DampingDistrib:
     serializedVersion: 2
     m_Curve: []
@@ -806,7 +806,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  m_Stiffness: 0.1
+  m_Stiffness: 0.3
   m_StiffnessDistrib:
     serializedVersion: 2
     m_Curve: []
