@@ -8,8 +8,8 @@ using UnityEngine.SceneManagement;
 public class LevelManager : MonoBehaviour
 {
 	private Pickup pickupPrefab;
-	private int amountOfPickups = 10;
-	private Vector3 levelBounds = new Vector3(100, 1, 6);
+	private int amountOfPickups = 80;
+	private Vector3 levelBounds = new Vector3(120, 1, 12);
 
 	bool gameRunning = false;
 
@@ -48,7 +48,7 @@ public class LevelManager : MonoBehaviour
 	void SpawnLevel ()
 	{
 		for (int i = 0; i < amountOfPickups; i++) {
-			Pickup pickup = Instantiate(pickupPrefab, new Vector3(Random.Range(0, levelBounds.x), Random.Range(1, 30), Random.Range(-levelBounds.z / 2, levelBounds.z / 2)), Quaternion.Euler(0, Random.Range(0, 360), 0));
+			Pickup pickup = Instantiate(pickupPrefab, new Vector3(Random.Range(-levelBounds.x, levelBounds.x), Random.Range(1, 30), Random.Range(-levelBounds.z / 2, levelBounds.z / 2)), Quaternion.Euler(0, Random.Range(0, 360), 0));
 			pickup.Init(Util.GetRandomEnumerator<DecorationType>());
 
 		}
