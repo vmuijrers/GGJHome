@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,7 +8,8 @@ public class Enemy : MonoBehaviour, IEnemy
     protected float runAwaySpeed = 8;
     protected Renderer renderer;
     private System.Action<IEnemy> OnDead;
-    private void Awake() {
+
+	private void Awake() {
         renderer = GetComponentInChildren<Renderer>();
     }
 

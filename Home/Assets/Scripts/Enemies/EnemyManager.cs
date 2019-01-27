@@ -23,8 +23,9 @@ public class EnemyManager : MonoBehaviour {
         instance = this;
         crabs = FindObjectsOfType<Crab>();
 		Debug.Log(Util.Choose(crabs).gameObject.name);
-		StartCoroutine(Spawner());
+		StartCoroutine(EnemySpawner());
 	}
+
     public void CheckEnemyhitByLight(Vector3 dir, Vector3 pos) {
         foreach (IEnemy e in allEnemies) {
             if(e != null) {
@@ -38,17 +39,17 @@ public class EnemyManager : MonoBehaviour {
 
     }
 
-    IEnumerator Spawner ()
+    IEnumerator EnemySpawner ()
 	{
 		yield return new WaitForSeconds(timeBetweenSpawns);
         Vector3 spawnPos = new Vector3(Camera.main.transform.position.x, 0, Camera.main.transform.position.z);
         Vector2 dir = Random.insideUnitCircle.normalized;
-        spawnPos += new Vector3(dir.x, 0, dir.y) * 15;
+        spawnPos += new Vector3(dir.x, 0, dir.y) * 20;
         IEnemy nextEnemy = Instantiate(Util.Choose(enemyPrefabs), spawnPos, Quaternion.identity).GetComponent<IEnemy>();
 		nextEnemy.Init(Util.Choose(crabs));
         nextEnemy.ListenToDead(OnEnemyDied);
         allEnemies.Add(nextEnemy);
-        yield return StartCoroutine(Spawner());
+        yield return StartCoroutine(EnemySpawner());
 	}
 
     void OnEnemyDied(IEnemy e) {
