@@ -1,5 +1,13 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Home/Assets/com.unity.postprocessing@2.1.2.meta~HEAD_0.meta~HEAD.meta
 guid: 0b767a097b06fad41bc420bfc09667ea
+=======
+<<<<<<< HEAD
+guid: 18c3470b9eb907b40bf8dd9b212c94fa
+=======
+guid: 65d33ad42b47e004b9523dc6b0b40f61
+>>>>>>> 8d05da16b706699d7db6278b6aac6831c61354df
+>>>>>>> 267e75b47b272ef2654dff9cf208a4ce853bbcf6:Home/Assets/com.unity.postprocessing@2.1.2/PostProcessing.meta~HEAD.meta
 DefaultImporter:
   externalObjects: {}
   userData: 
