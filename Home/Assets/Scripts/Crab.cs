@@ -33,6 +33,10 @@ public class Crab : MonoBehaviour
 
     private Collider[] cols;
 
+    //Audio
+    private AudioSource aSource;
+    private float maxFootStepVolume = 0.4f;
+
     private bool isInShell = false;
 	public bool IsInShell
 	{
@@ -61,7 +65,12 @@ public class Crab : MonoBehaviour
 	}
 	private void Awake ()
 	{
-		rigidbody = GetComponent<Rigidbody>();
+        aSource = GetComponent<AudioSource>();
+        aSource.time = Random.Range(0, aSource.clip.length);
+        aSource.volume = 0;
+        aSource.Play();
+
+        rigidbody = GetComponent<Rigidbody>();
 		renderer = GetComponentInChildren<Renderer>();
         cols = GetComponentsInChildren<Collider>();
         baseMat = renderer.material;
@@ -169,6 +178,11 @@ public class Crab : MonoBehaviour
 		direction = direction.normalized;
 		if (!IsInShell) {
             rigidbody.velocity = new Vector3(direction.x * speed, 0, direction.y * speed);
+            if(rigidbody.velocity.magnitude > 0) {
+                aSource.volume = Mathf.Lerp(aSource.volume, maxFootStepVolume, Time.deltaTime);
+            } else {
+                aSource.volume = Mathf.Lerp(aSource.volume, 0, Time.deltaTime);
+            }
             if(direction != Vector2.zero)
                 transform.rotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.y), Vector3.up);
         }
@@ -220,7 +234,7 @@ public class Crab : MonoBehaviour
 			//renderer.material = deathMat;
             if(artReference != null) {
                 Tween deadTween = artReference.transform.DORotateQuaternion(artReference.transform.rotation * Quaternion.Euler(0,0,180), 0.6f);
-                Tween jumpTween = artReference.transform.DOLocalJump(artReference.transform.localPosition,1,1,0.7f);
+                Tween jumpTween = artReference.transform.DOLocalJump(artReference.transform.localPosition+ new Vector3(0,0.5f,0),1,1,0.7f);
                 jumpTween.Play();
                 deadTween.Play();
             }
@@ -235,8 +249,9 @@ public class Crab : MonoBehaviour
 
     public void OnRevive() {
         DOTween.KillAll();
-        Tween deadTween = artReference.transform.DORotateQuaternion(Quaternion.identity, 0.3f);
+        Tween deadTween = artReference.transform.DORotateQuaternion(Quaternion.Euler(0,0,0), 0.3f).OnComplete(()=> { artReference.transform.localPosition = new Vector3(0, 0, -.65f); artReference.transform.localRotation = Quaternion.Euler(0, 0, 0); });
         deadTween.Play();
+      
         dood = false;
         //renderer.material = baseMat;
     }

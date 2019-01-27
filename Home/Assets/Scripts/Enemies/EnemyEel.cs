@@ -6,7 +6,7 @@ public class EnemyEel : Enemy, IEnemy
 {
 	Transform targetCrabTrans;
 	Crab targetCrabScript;
-
+    public AudioClip eelAttack;
 	const float farSpeed = 6, closeSpeed = 5, exitSpeed = 7, closeDistance = 7, contactDistance = 1;
 	public int damage = 1;
 	Vector3 exitPosition = new Vector3(-15, 0, -15);
@@ -33,6 +33,7 @@ public class EnemyEel : Enemy, IEnemy
 			if (distanceToCrab < contactDistance * contactDistance) {
 				targetCrabScript.GetAttacked(damage);
 				targetHit = true;
+                AudioSource.PlayClipAtPoint(eelAttack, transform.position);
 			} else {
 				speed = farSpeed;
 			}
