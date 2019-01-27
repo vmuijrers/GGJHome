@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &6481884672212808121
+--- !u!1 &6474526940954469499
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,22 +8,22 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 3717474836553151858}
-  - component: {fileID: 974332329990858983}
+  - component: {fileID: 6474526940954469497}
+  - component: {fileID: 6474526940954469496}
   m_Layer: 0
-  m_Name: VegetationSpawner
+  m_Name: Intro
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &3717474836553151858
+--- !u!4 &6474526940954469497
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6481884672212808121}
+  m_GameObject: {fileID: 6474526940954469499}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -31,23 +31,15 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &974332329990858983
+--- !u!114 &6474526940954469496
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6481884672212808121}
+  m_GameObject: {fileID: 6474526940954469499}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 419db66985ab62441aa76b4e2436ea1d, type: 3}
+  m_Script: {fileID: 11500000, guid: b7543895f71162748b6b541de0efdcef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  vegetationPrefabs:
-  - {fileID: 9119458393187522914, guid: 79df072675853bb46b2ef84644452f57, type: 3}
-  - {fileID: 1248564621713854963, guid: 49e20d8a54b2c8a4fb825c1b7a654bcb, type: 3}
-  - {fileID: 3493268400891261439, guid: e17e1fa3b34a8784ca4da8b3ea94f475, type: 3}
-  - {fileID: 5503221475185674458, guid: cda898e5ba7b2984482b2e0905d895c2, type: 3}
-  maxSpawnZPos: 13
-  spawnXOffset: 17.5
-  distanceBetweenSpawns: 1.5
