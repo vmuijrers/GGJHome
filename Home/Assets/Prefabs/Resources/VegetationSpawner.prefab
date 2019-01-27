@@ -45,6 +45,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   vegetationPrefabs:
   - {fileID: 9119458393187522914, guid: 79df072675853bb46b2ef84644452f57, type: 3}
+  - {fileID: 1248564621713854963, guid: 49e20d8a54b2c8a4fb825c1b7a654bcb, type: 3}
+  - {fileID: 3493268400891261439, guid: e17e1fa3b34a8784ca4da8b3ea94f475, type: 3}
+  - {fileID: 5503221475185674458, guid: cda898e5ba7b2984482b2e0905d895c2, type: 3}
   maxSpawnZPos: 13
   spawnXOffset: 17.5
-  distanceBetweenSpawns: 4
+  distanceBetweenSpawns: 1.5

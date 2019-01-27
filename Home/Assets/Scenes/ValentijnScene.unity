@@ -203,7 +203,7 @@ PrefabInstance:
     - target: {fileID: 3976989691065254321, guid: d44b6e62a1289574a83361c87aaaded2,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1452477202282165086, guid: d44b6e62a1289574a83361c87aaaded2,
         type: 3}
@@ -521,7 +521,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 88c5fe48d3a9bf94aa0113b5152220a4, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 0350344b54be2514cbb4bdda8f0ed8d4, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -941,6 +941,15 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 202469122, guid: 6545eeb9e75e88e4a8b3af16254066f5, type: 3}
+      propertyPath: sharedProfile
+      value: 
+      objectReference: {fileID: 11400000, guid: 1fd48efe801dc994e909a3960126d753,
+        type: 2}
+    - target: {fileID: 202469122, guid: 6545eeb9e75e88e4a8b3af16254066f5, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1348939458265768953, guid: 6545eeb9e75e88e4a8b3af16254066f5,
         type: 3}
       propertyPath: m_ClearFlags
@@ -960,15 +969,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_BackGroundColor.b
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 202469122, guid: 6545eeb9e75e88e4a8b3af16254066f5, type: 3}
-      propertyPath: sharedProfile
-      value: 
-      objectReference: {fileID: 11400000, guid: 1fd48efe801dc994e909a3960126d753,
-        type: 2}
-    - target: {fileID: 202469122, guid: 6545eeb9e75e88e4a8b3af16254066f5, type: 3}
-      propertyPath: m_Enabled
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 202469123, guid: 6545eeb9e75e88e4a8b3af16254066f5, type: 3}
       propertyPath: m_Enabled
