@@ -36,6 +36,7 @@ public class Crab : MonoBehaviour
     //Audio
     private AudioSource aSource;
     private float maxFootStepVolume = 0.4f;
+    private GameObject bubbleParticle;
 
     private bool isInShell = false;
 	public bool IsInShell
@@ -74,6 +75,11 @@ public class Crab : MonoBehaviour
 		renderer = GetComponentInChildren<Renderer>();
         cols = GetComponentsInChildren<Collider>();
         baseMat = renderer.material;
+        bubbleParticle = (GameObject)Resources.Load("BubbleParticle");
+    }
+
+    private void Start() {
+        InvokeRepeating("DoBubbles", 8f, 12f);
     }
 
     private void OnEnterShell() {
@@ -93,6 +99,10 @@ public class Crab : MonoBehaviour
         foreach (Collider c in cols) {
             c.enabled = value;
         }
+    }
+
+    private void DoBubbles() {
+        Destroy(Instantiate(bubbleParticle, transform.position, Quaternion.Euler(-90,0,0)),10f);
     }
 
 	private void Update ()
