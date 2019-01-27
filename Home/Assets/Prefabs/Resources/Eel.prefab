@@ -116,6 +116,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   eelAttack: {fileID: 8300000, guid: b0f0af71ba62f114aa645da5ff36fde1, type: 3}
+  farSpeed: 4
+  closeSpeed: 3
+  exitSpeed: 7
+  closeDistance: 7
+  contactDistance: 1
   damage: 1
 --- !u!82 &477451277
 AudioSource:
