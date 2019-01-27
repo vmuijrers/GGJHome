@@ -2,7 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum DecorationType { Basic, Star }
+public enum DecorationType {
+    Basic,
+    Star,
+    Barny,
+    Crayon,
+    Football,
+    LightHouse,
+    Logo,
+    Pan,
+    Pearl,
+    Shell,
+    Shrimp,
+    Treasure,
+    Urchin,
+    Wheel
+}
 public class Pickup : MonoBehaviour
 {
     public DecorationType type;
@@ -19,10 +34,11 @@ public class Pickup : MonoBehaviour
 
     }
     public void Init(DecorationType type) {
-        switch (type) {
-            case DecorationType.Basic: artRef = (GameObject)Instantiate(Resources.Load("Pickups/Basic"), transform.position, transform.rotation); break;
-            case DecorationType.Star: artRef = (GameObject)Instantiate(Resources.Load("Pickups/Star"), transform.position, transform.rotation); break;
-        }
+        artRef = (GameObject)Instantiate(Resources.Load("Pickups/"+type.ToString()), transform.position, transform.rotation);
+        //switch (type) {
+        //    case DecorationType.Basic: artRef = (GameObject)Instantiate(Resources.Load("Pickups/Basic"), transform.position, transform.rotation); break;
+        //    case DecorationType.Star: artRef = (GameObject)Instantiate(Resources.Load("Pickups/Star"), transform.position, transform.rotation); break;
+        //}
         artRef.transform.SetParent(transform);
         artRef.transform.localPosition = Vector3.zero;
         artRef.transform.localRotation = Quaternion.identity;
