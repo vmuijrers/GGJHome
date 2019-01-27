@@ -21,13 +21,13 @@ public enum DecorationType {
 public class Pickup : MonoBehaviour
 {
     public DecorationType type;
-    private ConfigurableJoint joint;
     private GameObject artRef;
     private bool isInitialized = false;
+    private Rigidbody rigidbody;
     // Start is called before the first frame update
     void Start()
     {
-        joint = GetComponent<ConfigurableJoint>();
+        rigidbody = GetComponent<Rigidbody>();
         if (!isInitialized) {
             Init(Util.GetRandomEnumerator<DecorationType>());
         }
@@ -35,39 +35,29 @@ public class Pickup : MonoBehaviour
     }
     public void Init(DecorationType type) {
         artRef = (GameObject)Instantiate(Resources.Load("Pickups/"+type.ToString()), transform.position, transform.rotation);
-        //switch (type) {
-        //    case DecorationType.Basic: artRef = (GameObject)Instantiate(Resources.Load("Pickups/Basic"), transform.position, transform.rotation); break;
-        //    case DecorationType.Star: artRef = (GameObject)Instantiate(Resources.Load("Pickups/Star"), transform.position, transform.rotation); break;
-        //}
         artRef.transform.SetParent(transform);
         artRef.transform.localPosition = Vector3.zero;
         artRef.transform.localRotation = Quaternion.identity;
         isInitialized = true;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (joint != null && joint.connectedBody != null) {
-            transform.LookAt(joint.connectedBody.transform.position);
-            //transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(joint.connectedBody.transform.position - transform.position), 180f *Time.deltaTime);
+    public void OnPickup(Transform newParent) {
+        rigidbody.isKinematic = true;
+        Collider[] col = GetComponentsInChildren<Collider>();
+        foreach (Collider c in col) {
+            c.enabled = false;
         }
+        transform.SetParent(newParent);
+        transform.localPosition = new Vector3(0, 0, 1);
     }
 
-    public void SetCrabToJoint(Rigidbody rb) {
-        joint.connectedBody = rb;
-        joint.xMotion = ConfigurableJointMotion.Limited;
-        joint.zMotion = ConfigurableJointMotion.Limited;
-    }
-
-    public void FreeJoint() {
-        joint.xMotion = ConfigurableJointMotion.Free;
-        joint.zMotion = ConfigurableJointMotion.Free;
-        joint.connectedBody = null;
-    }
-
-    public void BreakJoint() {
-        Destroy(joint);
+    public void OnRelease() {
+        transform.SetParent(null);
+        Collider[] col = GetComponentsInChildren<Collider>();
+        foreach (Collider c in col) {
+            c.enabled = true;
+        }
+        rigidbody.isKinematic = false;
     }
 
     public void OnAttachToShell() {

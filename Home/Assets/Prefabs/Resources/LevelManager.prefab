@@ -158,7 +158,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -217,5 +217,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c14f43f382e042f44b20578029688720, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  vegetationPrefabs:
+  - {fileID: 9119458393187522914, guid: 79df072675853bb46b2ef84644452f57, type: 3}
+  - {fileID: 1248564621713854963, guid: 49e20d8a54b2c8a4fb825c1b7a654bcb, type: 3}
+  - {fileID: 3493268400891261439, guid: e17e1fa3b34a8784ca4da8b3ea94f475, type: 3}
+  - {fileID: 5503221475185674458, guid: cda898e5ba7b2984482b2e0905d895c2, type: 3}
   fadeImage: {fileID: 2121252006}
   fadeOutTime: 1.5

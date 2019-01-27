@@ -20,6 +20,7 @@ public class Crab : MonoBehaviour
 	private ShellEntrance nearestShell;
     private Pickup nearestPickup;
     private Crab nearestCrab;
+    private Pickup pickedUpItem;
 
 	[Header("Settings")]
 	public float speed = 5;
@@ -77,6 +78,7 @@ public class Crab : MonoBehaviour
         baseMat = renderer.material;
         bubbleParticle = (GameObject)Resources.Load("BubbleParticle");
     }
+
 
     private void Start() {
         InvokeRepeating("DoBubbles", 8f, 12f);
@@ -150,22 +152,25 @@ public class Crab : MonoBehaviour
 
 
             //Add pickup to the shell
-            if (nearestPickup != null) {
-                nearestPickup.FreeJoint();
-                //nearestPickup.BreakJoint();
-                nearestPickup.OnAttachToShell();
-                nearestShell.shell.AttachPickup(nearestPickup);
-                nearestPickup = null;
+            if (nearestShell != null && pickedUpItem != null) {
+                pickedUpItem.OnRelease();
+                pickedUpItem.OnAttachToShell();
+                nearestShell.shell.AttachPickup(pickedUpItem);
+                pickedUpItem = null;
                 
             }
 			rigidbody.position = Vector3.Scale(nearestShell.transform.position, new Vector3(1, 0, 1));
         } else {
-            if (nearestPickup != null) {
+            if (nearestPickup != null && pickedUpItem == null) {
                 if (gamePadState.Triggers.Right > triggerTreshold) {
-                    nearestPickup.SetCrabToJoint(rigidbody);
-                } else {
-                    nearestPickup.FreeJoint();
+                    pickedUpItem = nearestPickup;
+                    pickedUpItem.OnPickup(transform);
+                    //nearestPickup.SetCrabToJoint(rigidbody);
                 }
+            }
+            if(pickedUpItem != null && gamePadState.Triggers.Right < triggerTreshold) {
+                pickedUpItem.OnRelease();
+                pickedUpItem = null;
             }
         }
 
@@ -224,9 +229,6 @@ public class Crab : MonoBehaviour
 		}
 
         if ((1 << col.gameObject.layer & PickUpTriggerLayer) != 0) { 
-            if (nearestPickup != null) {
-                nearestPickup.FreeJoint();
-            }
             nearestPickup = null;
         }
         if ((1 << col.gameObject.layer & CrabTriggerLayer) != 0) {
