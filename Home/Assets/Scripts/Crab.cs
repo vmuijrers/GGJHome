@@ -13,6 +13,7 @@ public class Crab : MonoBehaviour
 	private GamePadState gamePadState;
 
 	private Vector2 leftStickInput;
+    private Vector2 rightStickInput;
 	private float leftTrigger;
 	private Rigidbody rigidbody;
 	private bool isNearShell;
@@ -101,9 +102,11 @@ public class Crab : MonoBehaviour
 
             if (gamePadState.Triggers.Left > triggerTreshold) {
                 if (!IsInShell) {
-                    nearestShell.AttachCrab(this);
+                    if (nearestShell.AttachCrab(this)) {
+                        IsInShell = true;
+                    }
                 }
-                IsInShell = true;
+                
             } else {
                 IsInShell = false;
                 nearestShell.DetachCrab(this);
@@ -117,10 +120,20 @@ public class Crab : MonoBehaviour
 		}
 
 		if (IsInShell) {
+
+            //SpotLight rotation;
+            if(rightStickInput != Vector2.zero) {
+                nearestShell.shell.SpotLightHolder.transform.rotation =
+            Quaternion.RotateTowards(
+                nearestShell.shell.SpotLightHolder.transform.rotation,
+                Quaternion.Euler(0, Mathf.Atan2(-rightStickInput.y, rightStickInput.x) * Mathf.Rad2Deg + 90, 0), 180f * Time.deltaTime);
+            }
+
+
             //Add pickup to the shell
             if (nearestPickup != null) {
                 nearestPickup.FreeJoint();
-                nearestPickup.BreakJoint();
+                //nearestPickup.BreakJoint();
                 nearestPickup.OnAttachToShell();
                 nearestShell.shell.AttachPickup(nearestPickup);
                 nearestPickup = null;
@@ -146,7 +159,8 @@ public class Crab : MonoBehaviour
 
 	private void GetInputs ()
 	{
-		leftStickInput = new Vector2(gamePadState.ThumbSticks.Left.X, gamePadState.ThumbSticks.Left.Y);
+        rightStickInput = new Vector2(gamePadState.ThumbSticks.Right.X, gamePadState.ThumbSticks.Right.Y);
+        leftStickInput = new Vector2(gamePadState.ThumbSticks.Left.X, gamePadState.ThumbSticks.Left.Y);
 		leftTrigger = gamePadState.Triggers.Left;
 	}
 
@@ -213,7 +227,7 @@ public class Crab : MonoBehaviour
 			CameraShake.OnShake(.2f, .4f, .05f);
 		} else {
             if (nearestShell != null) {
-                nearestShell.shell.GetAttacked(damage);
+                nearestShell.shell.TakeDamage(damage);
             }
 			    
 		}

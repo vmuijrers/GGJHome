@@ -2,9 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyRay : MonoBehaviour, IEnemy
+public class EnemyRay : Enemy, IEnemy
 {
-	Renderer renderer;
 
 	Transform targetCrabTrans;
 	Crab targetCrabScript;
@@ -48,9 +47,11 @@ public class EnemyRay : MonoBehaviour, IEnemy
 				inScope = false;
 			yield return null;
 		}
-		
-		Destroy(gameObject);
-	}
+
+        if (!renderer.isVisible) {
+            Die();
+        }
+    }
 
 	IEnumerator CheckForCrab ()
 	{
@@ -61,4 +62,6 @@ public class EnemyRay : MonoBehaviour, IEnemy
 			yield return null;
 		}
 	}
+
+
 }

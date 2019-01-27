@@ -7,12 +7,16 @@ using DG.Tweening;
 
 public class Shell : MonoBehaviour {
 
-    public int size = 1;
-    public ShellEntrance entrance;
+    private int size = 1;
+    private ShellEntrance entrance;
     public float speedModifier = 10;
-    public float strength = 0.5f;
+    public float lightStrength = 0.5f;
     public GameObject visualBottom, visualTop;
-    public Pickup pickupPrefab;
+    private Pickup pickupPrefab;
+
+    [Header("References")]
+    public Transform SpotLightHolder;
+    public Transform shellVisual;
 
     [HideInInspector] public MeshRenderer renderer;
 
@@ -22,7 +26,7 @@ public class Shell : MonoBehaviour {
     private Light light;
     private int numCrabs = 0;
     private List<PickupSlot> decorations = new List<PickupSlot>();
-    
+    private bool isAnimating;
 
     private void Awake() {
         renderer = GetComponentInChildren<MeshRenderer>();
@@ -32,11 +36,13 @@ public class Shell : MonoBehaviour {
         entrance.Init(this);
         decorations = GetComponentsInChildren<PickupSlot>().ToList();
         transform.localScale = new Vector3(size, size, size);
+        pickupPrefab = Resources.Load<Pickup>("Pickups/Pickup");
         StartCoroutine(PulseLight());
 
         foreach (PickupSlot slot in decorations) {
             Pickup pickup = Instantiate(pickupPrefab, slot.transform.position, slot.transform.rotation);
             pickup.Init(DecorationType.Basic);
+            pickup.OnAttachToShell();
             AttachPickup(pickup);
         }
 
@@ -47,23 +53,40 @@ public class Shell : MonoBehaviour {
     public int GetHPLeft() {
         return decorations.Count(x => x.reference != null);
     }
+
+
     private void Update() {
+        if (Input.GetKeyDown(KeyCode.Space)) {
+            TakeDamage(1);
+        }
 
         int crabCount = entrance.attachedCrabs.Count;
         if (crabCount > 0) {
+            SpotLightHolder.GetComponentInChildren<SpotLight>().ActivateLight();
             rigidBody.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionY;
             Vector2 dir = Vector2.zero;
             foreach(Crab c in entrance.attachedCrabs) {
                 dir += c.GetLeftStickInput();
             }
             dir /= crabCount;
+            Animate(dir);
             DoMove(dir, speedModifier);
             rigidBody.velocity = Vector3.zero;
         } else {
+            
             rigidBody.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
         }
     }
 
+    private void Animate(Vector2 dir) {
+        if(dir != Vector2.zero) {
+            if (!isAnimating) {
+                isAnimating = true;
+                shellVisual.transform.DOPunchRotation(new Vector3(0, 0, 15), 0.5f, 0, 0).OnComplete(() => { isAnimating = false; });
+            }
+            
+        }
+    }
     public void DoMove(Vector2 dir, float speedModifier) {
         //rigidBody.velocity = new Vector3(dir.x, 0, dir.y) * speedModifier;
         rigidBody.MovePosition(rigidBody.position + new Vector3(dir.x, 0, dir.y) * speedModifier * Time.deltaTime);
@@ -73,8 +96,9 @@ public class Shell : MonoBehaviour {
             
     }
 
-	public void GetAttacked (int damage)
+	public void TakeDamage (int damage)
 	{
+        CameraShake.OnShake(0.4f, 0.3f, 0.01f);
         if(GetHPLeft() > 0) {
             DetachRandomPickup();
         } else {
@@ -112,7 +136,7 @@ public class Shell : MonoBehaviour {
     public IEnumerator PulseLight() {
         float baseIntensity = light.intensity;
         while(true) {
-            float value = Mathf.PingPong(Time.time, strength);
+            float value = Mathf.PingPong(Time.time, lightStrength);
             light.intensity = baseIntensity + value;
             yield return null;
         }
@@ -123,5 +147,11 @@ public class Shell : MonoBehaviour {
             visualBottom.SetActive(crabCount > 0 ? true :  false);
         if(visualTop)
             visualTop.SetActive(crabCount > 1 ? true : false);
+
+        if(crabCount == 0) {
+            SpotLightHolder.GetComponentInChildren<SpotLight>().DeActivateLight();
+        } else {
+            SpotLightHolder.GetComponentInChildren<SpotLight>().ActivateLight();
+        }
     }
 }
