@@ -53,12 +53,14 @@ public class Shell : MonoBehaviour {
     public int GetHPLeft() {
         return decorations.Count(x => x.reference != null);
     }
-
-
     private void Update() {
         if (Input.GetKeyDown(KeyCode.Space)) {
             TakeDamage(1);
         }
+    }
+
+    private void FixedUpdate() {
+
 
         int crabCount = entrance.attachedCrabs.Count;
         if (crabCount > 0) {
