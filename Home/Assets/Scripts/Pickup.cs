@@ -8,11 +8,14 @@ public class Pickup : MonoBehaviour
     public DecorationType type;
     private ConfigurableJoint joint;
     private GameObject artRef;
+    private bool isInitialized = false;
     // Start is called before the first frame update
     void Start()
     {
         joint = GetComponent<ConfigurableJoint>();
-
+        if (!isInitialized) {
+            Init(Util.GetRandomEnumerator<DecorationType>());
+        }
 
     }
     public void Init(DecorationType type) {
@@ -23,6 +26,7 @@ public class Pickup : MonoBehaviour
         artRef.transform.SetParent(transform);
         artRef.transform.localPosition = Vector3.zero;
         artRef.transform.localRotation = Quaternion.identity;
+        isInitialized = true;
     }
 
     // Update is called once per frame

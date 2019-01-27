@@ -16,7 +16,10 @@ public class SpotLight : MonoBehaviour
     void Update()
     {
         if (isActive) {
-            EnemyManager.instance.CheckEnemyhitByLight(transform.forward, transform.position);
+            if(EnemyManager.instance != null) {
+                EnemyManager.instance.CheckEnemyhitByLight(transform.forward, transform.position);
+            }
+            
         }    
     }
     public void ActivateLight() {
