@@ -11,6 +11,7 @@ public class LevelManager : MonoBehaviour
 	private int amountOfPickups = 10;
 	private Vector3 levelBounds = new Vector3(100, 1, 6);
 
+	public GameObject[] vegetationPrefabs;
 	bool gameRunning = false;
 
 	Crab[] crabs;
@@ -24,6 +25,7 @@ public class LevelManager : MonoBehaviour
 		pickupPrefab = Resources.Load<Pickup>("Pickups/Pickup");
 		SpawnLevel();
 		crabs = FindObjectsOfType<Crab>();
+		PopulateStartWithVegetation();
 	}
 
 	private void Update ()
@@ -50,9 +52,15 @@ public class LevelManager : MonoBehaviour
 		for (int i = 0; i < amountOfPickups; i++) {
 			Pickup pickup = Instantiate(pickupPrefab, new Vector3(Random.Range(0, levelBounds.x), Random.Range(1, 30), Random.Range(-levelBounds.z / 2, levelBounds.z / 2)), Quaternion.Euler(0, Random.Range(0, 360), 0));
 			pickup.Init(Util.GetRandomEnumerator<DecorationType>());
-
 		}
+	}
 
+	void PopulateStartWithVegetation ()
+	{
+		for (int i = 0; i < 14; i++) {
+			Vector2 v = Random.insideUnitCircle.normalized;
+			Instantiate(Util.Choose(vegetationPrefabs), Vector3.zero + new Vector3(v.x, 0, v.y).normalized * Random.Range(8.0f, 12.0f), Quaternion.identity);
+		}
 	}
 
 	IEnumerator FadeOut ()
