@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyEel : MonoBehaviour, IEnemy
+public class EnemyEel : Enemy, IEnemy
 {
 	Transform targetCrabTrans;
 	Crab targetCrabScript;
@@ -48,7 +48,9 @@ public class EnemyEel : MonoBehaviour, IEnemy
 			}
 			yield return null;
 		}
-		
-		Destroy(gameObject);
-	}
+
+        if (!renderer.isVisible) {
+            Die();
+        }
+    }
 }

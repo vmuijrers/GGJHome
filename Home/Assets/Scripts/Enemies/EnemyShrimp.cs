@@ -2,9 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyShrimp : MonoBehaviour, IEnemy
+public class EnemyShrimp : Enemy, IEnemy
 {
-	Renderer renderer;
 	Transform[] shrimpTransforms;
 
 	Crab[] targetCrabScripts;
@@ -30,8 +29,11 @@ public class EnemyShrimp : MonoBehaviour, IEnemy
 		}
 		StartCoroutine(SpinningShrimp());
 	}
+    public override void OnHitByLight(Vector3 lightPoint) {
+        Debug.Log("Ignore the light cuz shrimps bitches!");    
+    }
 
-	IEnumerator Move ()
+    IEnumerator Move ()
 	{
 		StartCoroutine(CheckForCrab());
 		transform.LookAt(Util.Choose(targetCrabScripts).transform);
@@ -53,9 +55,10 @@ public class EnemyShrimp : MonoBehaviour, IEnemy
 			}
 			yield return null;
 		}
-
-		Destroy(gameObject);
-	}
+        if (!renderer.isVisible) {
+            Die();
+        }
+    }
 
 	IEnumerator CheckForCrab ()
 	{
