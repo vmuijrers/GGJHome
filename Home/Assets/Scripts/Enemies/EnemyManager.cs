@@ -37,7 +37,6 @@ public class EnemyManager : MonoBehaviour {
         foreach (IEnemy e in allEnemies) {
             if(e != null) {
                 float dot = Vector3.Dot(dir, (e.GetPosition() - pos).normalized);
-                Debug.Log("Dot: " + dot);
                 if (dot > 0.5f && Vector3.Distance(pos, e.GetPosition()) < lightSpotDistance) {
                     e.OnHitByLight(pos);
                 }

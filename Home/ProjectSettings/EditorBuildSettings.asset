@@ -8,6 +8,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Intro.unity
     guid: d00762b93380ec1468b2cb4ad7e98a14
+  - enabled: 0
+    path: Assets/Scenes/ValentijnScene.unity
+    guid: d9a303af774e6eb4cb0cf4f8c4fcb12a
   - enabled: 1
     path: Assets/Scenes/GamePlay.unity
     guid: 0f210f2e0416b32499d30f23666e36bb

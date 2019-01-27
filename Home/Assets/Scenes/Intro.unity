@@ -319,6 +319,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7458482281035708762, guid: 7aa5ece8677b9bd45b9bd9888f648816,
+        type: 3}
+      propertyPath: playerIndex
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7458482281035708765, guid: 7aa5ece8677b9bd45b9bd9888f648816,
         type: 3}
       propertyPath: m_Constraints
@@ -327,11 +332,6 @@ PrefabInstance:
     - target: {fileID: 7458482281035708765, guid: 7aa5ece8677b9bd45b9bd9888f648816,
         type: 3}
       propertyPath: m_Drag
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7458482281035708762, guid: 7aa5ece8677b9bd45b9bd9888f648816,
-        type: 3}
-      propertyPath: playerIndex
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -1420,7 +1420,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 382461f9428fe0841a1ffc9b6c3adc2c, type: 2}
+  - {fileID: 2100000, guid: b2d3f57f3c585f54f9dea74f084e4386, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2061,7 +2061,7 @@ PrefabInstance:
     - target: {fileID: 1822917136349511305, guid: 09b0d96bca625f5459cf2823bd28624a,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.8
+      value: 1.24
       objectReference: {fileID: 0}
     - target: {fileID: 1822917136349511305, guid: 09b0d96bca625f5459cf2823bd28624a,
         type: 3}
@@ -2379,6 +2379,15 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 202469122, guid: 6545eeb9e75e88e4a8b3af16254066f5, type: 3}
+      propertyPath: sharedProfile
+      value: 
+      objectReference: {fileID: 11400000, guid: 1fd48efe801dc994e909a3960126d753,
+        type: 2}
+    - target: {fileID: 202469122, guid: 6545eeb9e75e88e4a8b3af16254066f5, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1348939458265768953, guid: 6545eeb9e75e88e4a8b3af16254066f5,
         type: 3}
       propertyPath: m_ClearFlags
@@ -2403,15 +2412,6 @@ PrefabInstance:
         type: 3}
       propertyPath: field of view
       value: 34
-      objectReference: {fileID: 0}
-    - target: {fileID: 202469122, guid: 6545eeb9e75e88e4a8b3af16254066f5, type: 3}
-      propertyPath: sharedProfile
-      value: 
-      objectReference: {fileID: 11400000, guid: 1fd48efe801dc994e909a3960126d753,
-        type: 2}
-    - target: {fileID: 202469122, guid: 6545eeb9e75e88e4a8b3af16254066f5, type: 3}
-      propertyPath: m_Enabled
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 202469123, guid: 6545eeb9e75e88e4a8b3af16254066f5, type: 3}
       propertyPath: m_Enabled
