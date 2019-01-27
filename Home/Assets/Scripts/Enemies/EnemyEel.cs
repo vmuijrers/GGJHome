@@ -7,11 +7,11 @@ public class EnemyEel : Enemy, IEnemy
 	Transform targetCrabTrans;
 	Crab targetCrabScript;
     public AudioClip eelAttack;
-	const float farSpeed = 6, closeSpeed = 5, exitSpeed = 7, closeDistance = 7, contactDistance = 1;
+	public float farSpeed = 6, closeSpeed = 5, exitSpeed = 7, closeDistance = 7, contactDistance = 1;
 	public int damage = 1;
 	Vector3 exitPosition = new Vector3(-15, 0, -15);
 
-	public void Init (Crab targetCrab)
+	public override void Init (Crab targetCrab)
 	{
 		targetCrabScript = targetCrab;
 		targetCrabTrans = targetCrab.transform;

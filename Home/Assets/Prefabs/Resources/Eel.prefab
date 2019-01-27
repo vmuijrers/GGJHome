@@ -115,6 +115,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c9dfbaee5e30904f9e3bca7bb093c80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  eelAttack: {fileID: 8300000, guid: b0f0af71ba62f114aa645da5ff36fde1, type: 3}
   damage: 1
 --- !u!82 &477451277
 AudioSource:
