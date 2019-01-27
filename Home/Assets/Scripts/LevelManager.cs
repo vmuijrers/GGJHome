@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,6 +10,7 @@ public class LevelManager : MonoBehaviour
     private Pickup pickupPrefab;
     private int amountOfPickups = 10;
     private Vector3 levelBounds = new Vector3(100, 1, 6);
+<<<<<<< HEAD
 
 	bool gameRunning = false;
 
@@ -18,6 +19,9 @@ public class LevelManager : MonoBehaviour
 	public Image fadeImage;
 	public float fadeOutTime = 1.5f;
 
+=======
+    // Start is called before the first frame update
+>>>>>>> b9264a6f07d705c817589ff977529060f047493c
     void Start()
     {
 		StartCoroutine(FadeIn());
@@ -26,6 +30,7 @@ public class LevelManager : MonoBehaviour
 		crabs = FindObjectsOfType<Crab>();
     }
 
+<<<<<<< HEAD
 	private void Update ()
 	{
 		bool oneAlive = false;
@@ -46,11 +51,23 @@ public class LevelManager : MonoBehaviour
 	}
 
 	void SpawnLevel() {
+=======
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+
+    void SpawnLevel() {
+>>>>>>> b9264a6f07d705c817589ff977529060f047493c
         for(int i=0; i < amountOfPickups; i++) {
             Pickup pickup  = Instantiate(pickupPrefab, new Vector3(Random.Range(0, levelBounds.x), Random.Range(1, 30), Random.Range(-levelBounds.z / 2, levelBounds.z / 2)), Quaternion.Euler(0,Random.Range(0,360) ,0));
-            pickup.Init(Util.Choose(DecorationType.Basic, DecorationType.Star));
+            pickup.Init(Util.GetRandomEnumerator<DecorationType>());
+
         }
+
     }
+<<<<<<< HEAD
 
 	IEnumerator FadeOut ()
 	{
@@ -72,3 +89,6 @@ public class LevelManager : MonoBehaviour
 		}
 	}
 }
+=======
+}
+>>>>>>> b9264a6f07d705c817589ff977529060f047493c
