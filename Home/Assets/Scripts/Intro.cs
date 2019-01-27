@@ -1,18 +1,20 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using XInputDotNetPure;
+using UnityEngine.SceneManagement;
 
 public class Intro : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+	private void Update ()
+	{
+		for (int i = 0; i < 2; i++) {
+			GamePadState state = GamePad.GetState((PlayerIndex) i);
+			if (state.IsConnected) {
+				if (state.Buttons.Start == ButtonState.Pressed) {
+					SceneManager.LoadScene(1);
+				}
+			}
+		}
+	}
 }
