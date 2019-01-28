@@ -18,8 +18,13 @@ public class CameraShake : MonoBehaviour {
         originalPos = transform.localPosition;
         OnShake += DoShake;
     }
+
+    private void OnDestroy() {
+        OnShake -= DoShake;
+    }
     private void DoShake(float strength, float duration, float decay)
     {
+        StopAllCoroutines();
         StartCoroutine(Shake(strength, duration, decay));
     }
 

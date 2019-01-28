@@ -87,13 +87,16 @@ public class Crab : MonoBehaviour
     private void OnEnterShell() {
         Message.SendMessage(MessageEnum.ON_GRAB_SHELL);
         SetColliders(false);
-
         rigidbody.isKinematic = true;
     }
 
     private void OnExitShell() {
         Message.SendMessage(MessageEnum.ON_RELEASE_SHELL);
         SetColliders(true);
+        if (pickedUpItem != null) {
+            pickedUpItem.OnRelease();
+        }
+        pickedUpItem = null;
         rigidbody.isKinematic = false;
     }
 
@@ -150,10 +153,9 @@ public class Crab : MonoBehaviour
                 Quaternion.Euler(0, Mathf.Atan2(-rightStickInput.y, rightStickInput.x) * Mathf.Rad2Deg + 90, 0), 180f * Time.deltaTime);
             }
 
-
             //Add pickup to the shell
-            if (nearestShell != null && pickedUpItem != null) {
-                pickedUpItem.OnRelease();
+            if (pickedUpItem != null) {
+                pickedUpItem.transform.SetParent(null);
                 pickedUpItem.OnAttachToShell();
                 nearestShell.shell.AttachPickup(pickedUpItem);
                 pickedUpItem = null;

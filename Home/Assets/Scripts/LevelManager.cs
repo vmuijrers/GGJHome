@@ -42,7 +42,7 @@ public class LevelManager : MonoBehaviour
 		for (int i = 0; i < 2; i++) {
 			GamePadState state = GamePad.GetState((PlayerIndex) i);
 			if (state.Buttons.Back == ButtonState.Pressed) {
-				StartCoroutine(FadeIn());
+                SceneManager.LoadScene(1);
 			}
 		}
 	}
