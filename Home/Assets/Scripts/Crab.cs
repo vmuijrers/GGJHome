@@ -88,6 +88,7 @@ public class Crab : MonoBehaviour
         Message.SendMessage(MessageEnum.ON_GRAB_SHELL);
         SetColliders(false);
         rigidbody.isKinematic = true;
+        AudioManager.Instance.PlayAudio(transform.position, "EnterShell", is3D: false);
     }
 
     private void OnExitShell() {
@@ -167,7 +168,7 @@ public class Crab : MonoBehaviour
                 if (gamePadState.Triggers.Right > triggerTreshold) {
                     pickedUpItem = nearestPickup;
                     pickedUpItem.OnPickup(transform);
-                    //nearestPickup.SetCrabToJoint(rigidbody);
+                    AudioManager.Instance.PlayAudio(transform.position, "Pickup", is3D : false);
                 }
             }
             if(pickedUpItem != null && gamePadState.Triggers.Right < triggerTreshold) {
@@ -245,7 +246,7 @@ public class Crab : MonoBehaviour
 	{
 		if (!IsInShell && !dood) {
 			dood = true;
-			//renderer.material = deathMat;
+            AudioManager.Instance.PlayAudio(transform.position, "Hit", pitch: Random.Range(0.9f, 1.1f));
             if(artReference != null) {
                 Tween deadTween = artReference.transform.DORotateQuaternion(artReference.transform.rotation * Quaternion.Euler(0,0,180), 0.6f);
                 Tween jumpTween = artReference.transform.DOLocalJump(artReference.transform.localPosition+ new Vector3(0,0.5f,0),1,1,0.7f);
@@ -265,7 +266,7 @@ public class Crab : MonoBehaviour
         DOTween.KillAll();
         Tween deadTween = artReference.transform.DORotateQuaternion(Quaternion.Euler(0,0,0), 0.3f).OnComplete(()=> { artReference.transform.localPosition = new Vector3(0, 0, -.65f); artReference.transform.localRotation = Quaternion.Euler(0, 0, 0); });
         deadTween.Play();
-      
+        
         dood = false;
         //renderer.material = baseMat;
     }

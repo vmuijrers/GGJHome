@@ -110,9 +110,16 @@ public class Shell : MonoBehaviour {
             BreakShell();
         }
 	}
-
+    
     void BreakShell() {
         Debug.Log("Shell Broken");
+        for(int i = 0; i < entrance.attachedCrabs.Count-1; i--) {
+            entrance.DetachCrab(entrance.attachedCrabs[i]);
+        }
+        entrance.gameObject.SetActive(false);
+        Tweener deadAnimaion = transform.DOMove(transform.position + new Vector3(0, 1, 0) * 10, 10f);
+        deadAnimaion.Play();
+        rigidBody.isKinematic = true;
     }
 
     public void AttachPickup(Pickup pickup) {
