@@ -33,7 +33,7 @@ public class EnemyEel : Enemy, IEnemy
 			if (distanceToCrab < contactDistance * contactDistance) {
 				targetCrabScript.GetAttacked(damage);
 				targetHit = true;
-                AudioSource.PlayClipAtPoint(eelAttack, transform.position);
+                AudioManager.Instance.PlayAudio(transform.position, "Eel Attack", volume : 0.5f);
 			} else {
 				speed = farSpeed;
 			}

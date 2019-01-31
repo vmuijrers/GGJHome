@@ -16,8 +16,6 @@ public static class Util
 
     public static T GetRandomEnumerator<T>() {
         System.Array values = System.Enum.GetValues(typeof(T));
-
-        System.Random random = new System.Random();
         T randomBar = (T)values.GetValue(Random.Range(0, values.Length));
         return randomBar;
     }

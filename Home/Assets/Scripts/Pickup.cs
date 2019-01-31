@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum DecorationType {
-    Basic,
     Star,
     Barny,
     Crayon,

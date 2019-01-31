@@ -55,9 +55,12 @@ public class EnemyRay : Enemy, IEnemy
 
 	IEnumerator CheckForCrab ()
 	{
+        bool hitCrab = false;
 		while (true) {
-			if (Util.SquareDistance(transform.position, targetCrabTrans.position) < contactDistance * contactDistance) {
+			if (!hitCrab && Util.SquareDistance(transform.position, targetCrabTrans.position) < contactDistance * contactDistance) {
 				targetCrabScript.GetAttacked(damage);
+                hitCrab = true;
+                AudioManager.Instance.PlayAudio(transform.position, "Thump");
 			}
 			yield return null;
 		}

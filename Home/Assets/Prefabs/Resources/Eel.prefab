@@ -115,7 +115,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c9dfbaee5e30904f9e3bca7bb093c80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  eelAttack: {fileID: 8300000, guid: b0f0af71ba62f114aa645da5ff36fde1, type: 3}
+  eelAttack: {fileID: 8300000, guid: 7487af367afc45942bba1ec906c3d428, type: 3}
   farSpeed: 4
   closeSpeed: 3
   exitSpeed: 7
@@ -132,9 +132,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: c59f8cfc6c087f849be7b03b8e4a0d74, type: 3}
+  m_audioClip: {fileID: 8300000, guid: d577bc6194bc3c740a0bdd207d1a9dc2, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.296
+  m_Volume: 1
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -178,7 +178,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0.359
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0

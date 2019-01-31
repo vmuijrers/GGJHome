@@ -39,9 +39,12 @@ public class Shell : MonoBehaviour {
         pickupPrefab = Resources.Load<Pickup>("Pickups/Pickup");
         StartCoroutine(PulseLight());
 
+        int i = 0;
         foreach (PickupSlot slot in decorations) {
+            i++;
+            if(i > decorations.Count / 2) { continue; }
             Pickup pickup = Instantiate(pickupPrefab, slot.transform.position, slot.transform.rotation);
-            pickup.Init(DecorationType.Basic);
+            pickup.Init(DecorationType.Barny);
             pickup.OnAttachToShell();
             AttachPickup(pickup);
         }
@@ -107,9 +110,16 @@ public class Shell : MonoBehaviour {
             BreakShell();
         }
 	}
-
+    
     void BreakShell() {
         Debug.Log("Shell Broken");
+        for(int i = 0; i < entrance.attachedCrabs.Count-1; i--) {
+            entrance.DetachCrab(entrance.attachedCrabs[i]);
+        }
+        entrance.gameObject.SetActive(false);
+        Tweener deadAnimaion = transform.DOMove(transform.position + new Vector3(0, 1, 0) * 10, 10f);
+        deadAnimaion.Play();
+        rigidBody.isKinematic = true;
     }
 
     public void AttachPickup(Pickup pickup) {
@@ -119,9 +129,12 @@ public class Shell : MonoBehaviour {
                 pickup.transform.SetParent(obj.transform,false);
                 pickup.transform.localPosition = Vector3.zero;
                 pickup.transform.localRotation = Quaternion.identity;
-                break;
+                return;
             }
         }
+
+        //if all else fails
+        pickup.OnRelease();
         
     }
     public void DetachRandomPickup() {
